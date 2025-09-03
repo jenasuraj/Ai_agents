@@ -7,6 +7,13 @@ load_dotenv()
 import os
 from langgraph.prebuilt import create_react_agent
 import requests
+from typing import Annotated
+from typing_extensions import TypedDict
+from langgraph.graph import StateGraph, START, END
+from langgraph.graph.message import add_messages
+from langchain_core.messages import AIMessage
+from langgraph.checkpoint.memory import InMemorySaver
+memory = InMemorySaver()
 
 
 llm = ChatOpenAI(
@@ -15,6 +22,10 @@ llm = ChatOpenAI(
   model="google/gemini-2.5-flash",
   temperature=0.5,
   top_p= 0.4,)
+
+class State(TypedDict):
+    messages:Annotated[list,add_messages]
+    temp:str
 
 @tool
 def contentScrapper(input:str)->str:
@@ -47,7 +58,7 @@ def weather(input:str)->str:
 
 
 prompt = """
-You are Suraj, a helpful assistant who can provide well detailed information and also real time data,
+Your name is Suraj, a helpful assistant who can provide well detailed information and also real time data,
 like stock news, general news and so on.  
 Tools available:  
 - urlExtractor → fetch URLs for a topic.  
@@ -59,9 +70,22 @@ When necessary, you may call multiple tools
 if the result isn't relevant or detailed enough).  
 """
 
-tools = [urlExtractor,weather,contentScrapper]
-agent = create_react_agent(tools=tools,model=llm,prompt=prompt)
+def agent_func(state:State):
+    tools = [urlExtractor,weather,contentScrapper]
+    agent = create_react_agent(tools=tools,model=llm,prompt=prompt)
+    response = agent.invoke(state)
+    return {"messages":[AIMessage(content=response["messages"][-1].content)]}
+
+graph_builder = StateGraph(State)
+graph_builder.add_node("agent_func",agent_func)
+graph_builder.add_edge(START,"agent_func")
+graph_builder.add_edge("agent_func",END)
+graph = graph_builder.compile(checkpointer=memory)    
+
+
 while True:
-    inputQuery = input("Enter your query: ")
-    response = agent.invoke({"messages":[{"role":"user","content":inputQuery}]})
-    print(response["messages"][-1].content)    
+    inputData = input("Enter : ")
+    config = {"configurable": {"thread_id": "1"}}
+    initial_state = {"messages":[{"role":"user","content":inputData}]}
+    response = graph.invoke(initial_state, config,stream_mode="values")
+    print(response["messages"][-1].content)
