@@ -1,4 +1,5 @@
 # Scrapper Agent (Agent-1)
+Scrapper Agent (Agent-1) is an intelligent assistant that can search the web, scrape detailed content from URLs, and fetch real-time weather information. It uses a reasoning agent to decide which tool to call, providing accurate and structured responses to user queries
 
 ## Features
 - **Web Search (Tavily API)** → Finds relevant URLs for queries
