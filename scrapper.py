@@ -13,7 +13,9 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from langchain_core.messages import AIMessage
 from langgraph.checkpoint.memory import InMemorySaver
+from langchain.prompts import PromptTemplate
 memory = InMemorySaver()
+
 
 
 llm = ChatOpenAI(
@@ -25,7 +27,6 @@ llm = ChatOpenAI(
 
 class State(TypedDict):
     messages:Annotated[list,add_messages]
-    temp:str
 
 @tool
 def contentScrapper(input:str)->str:
@@ -36,6 +37,7 @@ def contentScrapper(input:str)->str:
     doc = firecrawl.scrape(input, formats=["markdown", "html"]) 
     return doc
 
+
 @tool
 def urlExtractor(input:str)->str:
     """Use this tool to extract url from the internet"""
@@ -44,9 +46,11 @@ def urlExtractor(input:str)->str:
     response = client.search(query=input)
     return response
 
+
 @tool
 def weather(input:str)->str:
     """use this tool to fetch weather or temperature related information,provide city name only as input"""
+    print("weather tool called...")
     try:
         response = requests.get(f'https://api.openweathermap.org/data/2.5/weather?q={input}&units=metric&appid={os.getenv("OPENWEATHER_API_KEY")}').json()
         if str(response["cod"]) != '200':
@@ -57,29 +61,67 @@ def weather(input:str)->str:
           return "couldn't find information, Server error"
 
 
+@tool
+def news(input:str)->str:
+    """use this tool to fetch news information like news regarding tesla/apple/hollywood etc so provide as a single word input for ex:tesla"""
+    print("news tool called...")   
+    try:
+        response = requests.get(f'https://newsapi.org/v2/everything?q={input}&from=2025-09-03&to=2025-09-03&sortBy=popularity&apiKey={os.getenv("NEWS_API_KEY")}').json()
+        if not response["articles"]:
+            return "server error"
+        else:
+            return response["articles"][:5]
+    except Exception as e:
+        return "could not load the data error..."    
+
+
+
 prompt = """
-Your name is Suraj, a helpful assistant who can provide well detailed information and also real time data,
-like stock news, general news and so on.  
+Your name is Suraj, a helpful assistant who can provide well detailed information and also real time data.
+After gathering information, your responses will be automatically summarized for conciseness.
+
 Tools available:  
-- urlExtractor → fetch URLs for a topic.  
-- contentScrapper → scrape detailed info from a URL.  
-Use urlExtractor for quick/general info.  
-Use contentScrapper when deeper details are needed.  
-When necessary, you may call multiple tools 
-(e.g., fetch a URL with urlExtractor and then use the url on contentScrapper
-if the result isn't relevant or detailed enough).  
+- urlExtractor → fetch URLs and brief content for a topic.  
+- contentScrapper → scrape detailed info from a specific URL.  
+- Weather -> fetch current temperature for any city.
+- News -> Fetch current trending news about companies/products (e.g., tesla, apple).
+
+Usage guidelines:
+1. Use urlExtractor for quick overviews and to find relevant URLs
+2. Use contentScrapper for deep dives into specific pages
+3. Provide detailed information - the summarizer will make it concise
+4. Remember: urlExtractor often provides enough content, so only use contentScrapper if you need more details
 """
 
 def agent_func(state:State):
-    tools = [urlExtractor,weather,contentScrapper]
+    tools = [urlExtractor,weather,contentScrapper,news]
     agent = create_react_agent(tools=tools,model=llm,prompt=prompt)
     response = agent.invoke(state)
     return {"messages":[AIMessage(content=response["messages"][-1].content)]}
 
+
+summarising_prompt = PromptTemplate.from_template("""
+You are an experienced summariser, so your job is to summarise user's data into tiny understandable words.
+You should not summarise too short but summarise the user's data in meaningfull structured way.                                          
+But If user's data about greetings / hello etc , you can provide whatever response you want.
+user's data:{response}
+""")
+def summariser(state:State):
+    print("in summariser node")
+    response = state["messages"][-1].content
+    chain = summarising_prompt | llm
+    summarised_data = chain.invoke({"response":response})
+    return{
+        "messages":[AIMessage(content=summarised_data.content)]
+    } 
+
+
 graph_builder = StateGraph(State)
 graph_builder.add_node("agent_func",agent_func)
+graph_builder.add_node("summariser",summariser)
 graph_builder.add_edge(START,"agent_func")
-graph_builder.add_edge("agent_func",END)
+graph_builder.add_edge("agent_func","summariser")
+graph_builder.add_edge("summariser",END)
 graph = graph_builder.compile(checkpointer=memory)    
 
 
