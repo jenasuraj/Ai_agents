@@ -15,3 +15,22 @@ Scrapper Agent (Agent-1) is an intelligent assistant that can search the web, sc
 - Firecrawl API (content scraping)
 - Tavily API (URL extraction/search)
 - OpenWeather API (weather data)
+
+
+
+# Podcast Agent (Agent-2)
+AuralAI is an AI-powered podcast agent that can generate engaging podcasts on any topic. It orchestrates conversations between a host (podcaster) and a guest using LLMs and converts the conversation into lifelike audio using ElevenLabs TTS.
+
+## Features
+- **Dynamic Podcast Generation** → Creates structured conversations between host and guest based on user input
+- **Short, Engaging Dialogue** → Limits content to 150–250 words for concise podcasts
+- **Humor & Personality** → Adds personality and humor in the conversation
+- **Text-to-Speech (ElevenLabs)** → Converts podcaster and guest text into high-quality audio
+- **Streamlit UI** → Allows users to input a podcast topic and play generated audio
+
+## Tech Stack
+- LangGraph (state-based graph execution)
+- LangChain & ChatGroq (LLM orchestration)
+- OpenRouter LLMs (Google Gemini 2.5 Flash)
+- ElevenLabs API (Text-to-Speech)
+- Streamlit (interactive web interface)
