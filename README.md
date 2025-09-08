@@ -52,3 +52,23 @@ Stock Agent (Agent-3) is an AI-powered financial assistant that provides real-ti
 - Alpha Vantage API (global stock data)
 - NSE / MoneyControl (Indian stock data)
 - Firecrawl API (financial news scraping)
+
+
+
+# GitHub Agent (Agent-4)
+GitHub Agent (Agent-4) is an AI-powered assistant that can interact with GitHub repositories using Model Context Protocol (MCP). It can read, analyze, and update repository files, particularly focusing on maintaining and improving README.md documentation.
+
+## Features
+- **Repository Access (MCP)** → Connects to GitHub repositories via Model Context Protocol
+- **File Reading & Analysis** → Examines repository structure and existing documentation
+- **README Management** → Updates, enhances, and maintains README.md files
+- **Content Generation** → Creates comprehensive documentation based on code analysis
+- **Version Control Integration** → Commits changes with meaningful messages
+
+## Tech Stack
+- Model Context Protocol (MCP) SDK
+- GitHub REST API
+- PyGithub library
+- LangGraph (state-based graph execution)
+- LangChain (LLM orchestration + tools)
+- OpenRouter LLMs (Google Gemini 2.5 Flash)
