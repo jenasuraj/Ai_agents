@@ -41,8 +41,7 @@ Stock Agent (Agent-3) is an AI-powered financial assistant that provides real-ti
 ## Features
 - **Market Data (Alpha Vantage API)** → Fetches stock prices, indicators, and company data
 - **Indian Market Data (NSE / MoneyControl via Firecrawl)** → Provides stock and index data from Indian markets
-- **Financial News (Yahoo Finance / Firecrawl)** → Extracts news articles and performs sentiment analysis
-- **Reddit Sentiment (PRAW API)** → Collects discussions from subreddits like `r/stocks` and `r/IndianStockMarket`
+- **Financial News ( Firecrawl)** → Extracts news articles and performs sentiment analysis
 - **Reasoning Agent** → Uses `create_react_agent` to automatically decide whether to pull data from markets, news, or social sentiment
 
 ## Tech Stack
@@ -53,5 +52,3 @@ Stock Agent (Agent-3) is an AI-powered financial assistant that provides real-ti
 - Alpha Vantage API (global stock data)
 - NSE / MoneyControl (Indian stock data)
 - Firecrawl API (financial news scraping)
-- Yahoo Finance API (company data + news)
-- PRAW (Reddit sentiment extraction)
