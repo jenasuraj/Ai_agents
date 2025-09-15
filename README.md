@@ -29,7 +29,8 @@ Welcome to the hub of specialized AI agents. This repository is a cutting-edge d
 
 
 
-
+</br>
+</br>
 
 
 ## Scrapper Agent (Agent-1)
@@ -49,6 +50,7 @@ Scrapper Agent (Agent-1) is an intelligent assistant that can search the web, sc
 - Tavily API (URL extraction/search)
 - OpenWeather API (weather data)
 
+</br>
 
 # Podcast Agent (Agent-2)
 AuralAI is an AI-powered podcast agent that can generate engaging podcasts on any topic. It orchestrates conversations between a host (podcaster) and a guest using LLMs and converts the conversation into lifelike audio using ElevenLabs TTS.
@@ -67,6 +69,7 @@ AuralAI is an AI-powered podcast agent that can generate engaging podcasts on an
 - ElevenLabs API (Text-to-Speech)
 - Streamlit (interactive web interface)
 
+</br>
 
 # Stock Agent (Agent-3)
 Stock Agent (Agent-3) is an AI-powered financial assistant that provides real-time and historical stock market data, financial news, and community sentiment analysis. It integrates multiple APIs and scraping tools to deliver structured insights and uses a reasoning agent to decide the best data source for a given query.
@@ -85,7 +88,7 @@ Stock Agent (Agent-3) is an AI-powered financial assistant that provides real-ti
 - NSE / MoneyControl (Indian stock data)
 - Firecrawl API (financial news scraping)
 
-
+</br>
 
 # GitHub Agent (Agent-4)
 GitHub Agent (Agent-4) is an AI-powered assistant that can interact with GitHub repositories using Model Context Protocol (MCP). It can read, analyze, and update repository files, particularly focusing on maintaining and improving README.md documentation.
@@ -106,6 +109,7 @@ GitHub Agent (Agent-4) is an AI-powered assistant that can interact with GitHub 
 - OpenRouter LLMs (Google Gemini 2.5 Flash)
 
 
+</br>
 
 # Notion Copilot (Agent-5)
 A sophisticated dual-agent system that acts as your research assistant and Notion database manager. It seamlessly researches topics and automatically structures & saves results to your Notion workspace.
