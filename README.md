@@ -1,3 +1,8 @@
+<p align="center">
+    <img src="public/img.png" width="900px" alt="agents">
+</p>
+
+
 # <div align="center">🐺 Ai agents with MCP and Langgraph</div>
 
 <div align="center">
