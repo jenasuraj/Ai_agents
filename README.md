@@ -32,17 +32,16 @@ Welcome to the hub of specialized AI agents. This repository is a cutting-edge d
 
 
 
-# Scrapper Agent (Agent-1)
+## Scrapper Agent (Agent-1)
 Scrapper Agent (Agent-1) is an intelligent assistant that can search the web, scrape detailed content from URLs, and fetch real-time weather information. It uses a reasoning agent to decide which tool to call, providing accurate and structured responses to user queries.
 
-## Features
+## ✨Features
 - **Web Search (Tavily API)** → Finds relevant URLs for queries
 - **Content Scraping (Firecrawl API)** → Extracts detailed content (Markdown/HTML) from URLs
 - **Weather Lookup (OpenWeather API)** → Provides real-time temperature for any city
 - **Reasoning Agent** → Uses `create_react_agent` to choose the right tool automatically
 
-## Tech Stack
-- Python 3.9+
+## 🛠️Tech Stack
 - LangGraph (state-based graph execution)
 - LangChain (LLM orchestration + tools)
 - OpenRouter LLMs (Google Gemini 2.5 Flash in this setup)
@@ -54,14 +53,14 @@ Scrapper Agent (Agent-1) is an intelligent assistant that can search the web, sc
 # Podcast Agent (Agent-2)
 AuralAI is an AI-powered podcast agent that can generate engaging podcasts on any topic. It orchestrates conversations between a host (podcaster) and a guest using LLMs and converts the conversation into lifelike audio using ElevenLabs TTS.
 
-## Features
+## ✨Features
 - **Dynamic Podcast Generation** → Creates structured conversations between host and guest based on user input
 - **Short, Engaging Dialogue** → Limits content to 150–250 words for concise podcasts
 - **Humor & Personality** → Adds personality and humor in the conversation
 - **Text-to-Speech (ElevenLabs)** → Converts podcaster and guest text into high-quality audio
 - **Streamlit UI** → Allows users to input a podcast topic and play generated audio
 
-## Tech Stack
+## 🛠️Tech Stack
 - LangGraph (state-based graph execution)
 - LangChain & ChatGroq (LLM orchestration)
 - OpenRouter LLMs (Google Gemini 2.5 Flash)
@@ -72,14 +71,13 @@ AuralAI is an AI-powered podcast agent that can generate engaging podcasts on an
 # Stock Agent (Agent-3)
 Stock Agent (Agent-3) is an AI-powered financial assistant that provides real-time and historical stock market data, financial news, and community sentiment analysis. It integrates multiple APIs and scraping tools to deliver structured insights and uses a reasoning agent to decide the best data source for a given query.
 
-## Features
+## ✨Features
 - **Market Data (Alpha Vantage API)** → Fetches stock prices, indicators, and company data
 - **Indian Market Data (NSE / MoneyControl via Firecrawl)** → Provides stock and index data from Indian markets
 - **Financial News ( Firecrawl)** → Extracts news articles and performs sentiment analysis
 - **Reasoning Agent** → Uses `create_react_agent` to automatically decide whether to pull data from markets, news, or social sentiment
 
-## Tech Stack
-- Python 3.9+
+## 🛠️Tech Stack
 - LangGraph (state-based graph execution)
 - LangChain (LLM orchestration + tools)
 - OpenRouter LLMs (Google Gemini 2.5 Flash)
@@ -92,17 +90,37 @@ Stock Agent (Agent-3) is an AI-powered financial assistant that provides real-ti
 # GitHub Agent (Agent-4)
 GitHub Agent (Agent-4) is an AI-powered assistant that can interact with GitHub repositories using Model Context Protocol (MCP). It can read, analyze, and update repository files, particularly focusing on maintaining and improving README.md documentation.
 
-## Features
+## ✨Features
 - **Repository Access (MCP)** → Connects to GitHub repositories via Model Context Protocol
 - **File Reading & Analysis** → Examines repository structure and existing documentation
 - **README Management** → Updates, enhances, and maintains README.md files
 - **Content Generation** → Creates comprehensive documentation based on code analysis
 - **Version Control Integration** → Commits changes with meaningful messages
 
-## Tech Stack
+## 🛠️Tech Stack
 - Model Context Protocol (MCP) SDK
 - GitHub REST API
 - PyGithub library
 - LangGraph (state-based graph execution)
 - LangChain (LLM orchestration + tools)
 - OpenRouter LLMs (Google Gemini 2.5 Flash)
+
+
+
+# Notion Copilot (Agent-5)
+A sophisticated dual-agent system that acts as your research assistant and Notion database manager. It seamlessly researches topics and automatically structures & saves results to your Notion workspace.
+
+## ✨Features
+- **Dual-Agent Architecture** → Intelligent routing between research and Notion specialists
+- **Smart Research** → Uses Tavily and Firecrawl for real-time web data
+- **Automated Notion Integration** → Formats any content into perfectly structured Notion blocks
+- **MCP Server** → Implements Model Context Protocol for clean tool management
+- **Conversational UI** → Interact naturally through a simple chat interface
+
+## 🛠️Tech Stack
+- LangGraph + LangChain (multi-agent orchestration)
+- OpenRouter LLMs (GPT-4o-mini, Llama-4, Gemini-2.5-Flash)
+- Notion API (database management)
+- Tavily API (web search)
+- Firecrawl API (content extraction)
+- MCP (Model Context Protocol implementation)
