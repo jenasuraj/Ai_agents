@@ -21,10 +21,10 @@ Welcome to the hub of specialized AI agents. This repository is a cutting-edge d
 
 | Agent | Name | Primary Function | Key Tools & APIs |
 | :--- | :--- | :--- | :--- |
-| **Agent-1** | **Scrapper Agent** | Intelligent web research & data extraction | Tavily, Firecrawl, OpenWeather |
-| **Agent-2** | **AuralAI (Podcast Agent)** | Dynamic podcast generation & text-to-speech | ChatGroq, ElevenLabs, Streamlit |
-| **Agent-3** | **Stock Agent** | Real-time financial market analysis & news | Alpha Vantage, NSE, MoneyControl |
-| **Agent-4** | **GitHub Agent** | Automated repository management & documentation | GitHub API, MCP SDK, PyGithub |
+| **Agent-1** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/scrapper.py"> **Scrapper Agent**</a> | Intelligent web research & data extraction | Tavily, Firecrawl, OpenWeather |
+| **Agent-2** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/podcast.py"> **Podcast Agent**</a> | Dynamic podcast generation & text-to-speech | ChatGroq, ElevenLabs, Streamlit |
+| **Agent-3** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/stock.py"> **Stock Agent**</a> | Real-time financial market analysis & news | Alpha Vantage, NSE, MoneyControl |
+| **Agent-4** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/github_agent.py"> **Github Agent**</a> | Automated repository management & documentation | GitHub API, MCP SDK, PyGithub |
 | **Agent-5** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/notion_agent.py">**Notion Copilot**</a> | Research, content structuring & Notion automation | Notion API, Tavily, Firecrawl |
 
 
