@@ -1,3 +1,26 @@
+# <div align="center">Ai agents with mcp and langgraph</div>
+
+<div align="center">
+Welcome to the hub of specialized AI agents. This repository is a cutting-edge demonstration of multi-agent systems, where each agent is a master of its domain. Built on a robust foundation of **LangGraph** and **LangChain**, these agents leverage the Model Context Protocol (MCP) for seamless tool integration and use powerful LLMs via **OpenRouter** to reason, execute, and deliver intelligent results. From scraping the web and generating podcasts to analyzing stocks and managing GitHub repositories, this project showcases the power of modular, AI-driven automation.
+</div>
+
+---
+
+## 🧭 Agent Overview
+
+| Agent | Name | Primary Function | Key Tools & APIs |
+| :--- | :--- | :--- | :--- |
+| **Agent-1** | **Scrapper Agent** | Intelligent web research & data extraction | Tavily, Firecrawl, OpenWeather |
+| **Agent-2** | **AuralAI (Podcast Agent)** | Dynamic podcast generation & text-to-speech | ChatGroq, ElevenLabs, Streamlit |
+| **Agent-3** | **Stock Agent** | Real-time financial market analysis & news | Alpha Vantage, NSE, MoneyControl |
+| **Agent-4** | **GitHub Agent** | Automated repository management & documentation | GitHub API, MCP SDK, PyGithub |
+| **Agent-5** | **Notion Copilot** | Research, content structuring & Notion automation | Notion API, Tavily, Firecrawl |
+
+
+
+
+
+
 # Scrapper Agent (Agent-1)
 Scrapper Agent (Agent-1) is an intelligent assistant that can search the web, scrape detailed content from URLs, and fetch real-time weather information. It uses a reasoning agent to decide which tool to call, providing accurate and structured responses to user queries.
 
