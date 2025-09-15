@@ -25,7 +25,7 @@ Welcome to the hub of specialized AI agents. This repository is a cutting-edge d
 | **Agent-2** | **AuralAI (Podcast Agent)** | Dynamic podcast generation & text-to-speech | ChatGroq, ElevenLabs, Streamlit |
 | **Agent-3** | **Stock Agent** | Real-time financial market analysis & news | Alpha Vantage, NSE, MoneyControl |
 | **Agent-4** | **GitHub Agent** | Automated repository management & documentation | GitHub API, MCP SDK, PyGithub |
-| **Agent-5** | **Notion Copilot** | Research, content structuring & Notion automation | Notion API, Tavily, Firecrawl |
+| **Agent-5** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/notion_agent.py">**Notion Copilot**</a> | Research, content structuring & Notion automation | Notion API, Tavily, Firecrawl |
 
 
 
