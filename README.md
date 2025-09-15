@@ -2,6 +2,14 @@
     <img src="public/img.png" width="900px" alt="agents">
 </p>
 
+<p align="center">
+  <a href="https://www.linkedin.com/in/suraj-jena-0991a121a/">
+    <img src="https://img.shields.io/badge/-Follow%20Suraj%20Jena-blue?logo=linkedin&style=flat-square" alt="LinkedIn">
+  </a>
+  <a href="https://x.com/jenasuraj_">
+    <img src="https://img.shields.io/twitter/follow/jenasuraj_" alt="Twitter">
+  </a>
+</p>
 
 # <div align="center">🐺 Ai agents with MCP and Langgraph</div>
 
