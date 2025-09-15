@@ -1,7 +1,7 @@
-# <div align="center">Ai agents with mcp and langgraph</div>
+# <div align="center">🐺 Ai agents with MCP and Langgraph</div>
 
 <div align="center">
-Welcome to the hub of specialized AI agents. This repository is a cutting-edge demonstration of multi-agent systems, where each agent is a master of its domain. Built on a robust foundation of **LangGraph** and **LangChain**, these agents leverage the Model Context Protocol (MCP) for seamless tool integration and use powerful LLMs via **OpenRouter** to reason, execute, and deliver intelligent results. From scraping the web and generating podcasts to analyzing stocks and managing GitHub repositories, this project showcases the power of modular, AI-driven automation.
+Welcome to the hub of specialized AI agents. This repository is a cutting-edge demonstration of multi-agent systems, where each agent is a master of its domain. Built on a robust foundation of LangGraph and LangChain and MCP, these agents leverage the Model Context Protocol (MCP) for seamless tool integration and use powerful LLMs via OpenRouter to reason, execute, and deliver intelligent results. From scraping the web and generating podcasts to analyzing stocks and managing GitHub repositories, this project showcases the power of modular, AI-driven automation.
 </div>
 
 ---
