@@ -16,7 +16,7 @@ import requests
 
 class State(TypedDict):
     messages: Annotated[list, add_messages]
-    reddit_data: Annotated[list,add_messages]
+
 
 llm = ChatOpenAI(
     api_key=os.getenv("OPENROUTER_API_KEY"),
