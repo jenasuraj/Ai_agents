@@ -26,7 +26,7 @@ Welcome to the hub of specialized AI agents. This repository is a cutting-edge d
 | **Agent-3** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/stock.py"> **Stock Agent**</a> | Real-time financial market analysis & news | Alpha Vantage, NSE, MoneyControl |
 | **Agent-4** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/github_agent.py"> **Github Agent**</a> | Automated repository management & documentation | GitHub API, MCP SDK, PyGithub |
 | **Agent-5** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/notion_agent.py">**Notion Copilot**</a> | Research, content structuring & Notion automation | Notion API, Tavily, Firecrawl |
-
+| **Agent-6** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/deep_research.py"> **Deep research Agent**</a> | Intelligent deep research  | Tavily, Firecrawl |
 
 
 </br>
@@ -52,7 +52,7 @@ Scrapper Agent (Agent-1) is an intelligent assistant that can search the web, sc
 
 </br>
 
-# Podcast Agent (Agent-2)
+## Podcast Agent (Agent-2)
 AuralAI is an AI-powered podcast agent that can generate engaging podcasts on any topic. It orchestrates conversations between a host (podcaster) and a guest using LLMs and converts the conversation into lifelike audio using ElevenLabs TTS.
 
 ## ✨Features
@@ -71,7 +71,7 @@ AuralAI is an AI-powered podcast agent that can generate engaging podcasts on an
 
 </br>
 
-# Stock Agent (Agent-3)
+## Stock Agent (Agent-3)
 Stock Agent (Agent-3) is an AI-powered financial assistant that provides real-time and historical stock market data, financial news, and community sentiment analysis. It integrates multiple APIs and scraping tools to deliver structured insights and uses a reasoning agent to decide the best data source for a given query.
 
 ## ✨Features
@@ -90,7 +90,7 @@ Stock Agent (Agent-3) is an AI-powered financial assistant that provides real-ti
 
 </br>
 
-# GitHub Agent (Agent-4)
+## GitHub Agent (Agent-4)
 GitHub Agent (Agent-4) is an AI-powered assistant that can interact with GitHub repositories using Model Context Protocol (MCP). It can read, analyze, and update repository files, particularly focusing on maintaining and improving README.md documentation.
 
 ## ✨Features
@@ -111,7 +111,7 @@ GitHub Agent (Agent-4) is an AI-powered assistant that can interact with GitHub 
 
 </br>
 
-# Notion Copilot (Agent-5)
+## Notion Copilot (Agent-5)
 A sophisticated dual-agent system that acts as your research assistant and Notion database manager. It seamlessly researches topics and automatically structures & saves results to your Notion workspace.
 
 ## ✨Features
@@ -128,3 +128,22 @@ A sophisticated dual-agent system that acts as your research assistant and Notio
 - Tavily API (web search)
 - Firecrawl API (content extraction)
 - MCP (Model Context Protocol implementation)
+
+
+</br>
+
+
+## Deep Research Agent (Agent-6)
+An advanced research assistant that performs deep web research, scrapes high-quality content, and delivers a structured, actionable output.
+
+## ✨Features
+- **Deep Research Capability** → Automatically searches and scrapes data from multiple sources  
+- **Automated URL Scraping** → Dynamically calls the scraper tool for each discovered URL  
+- **Structured Final Output** → Produces a clean, well-organized result for easy consumption  
+- **Prompt-Centric Architecture** → Fully driven by prompt instructions for flexibility  
+
+## 🛠️Tech Stack
+- LangGraph + LangChain (agent orchestration)
+- OpenRouter LLMs (GPT-4o-mini, Llama-4, Gemini-2.5-Flash)
+- Firecrawl  (content extraction)
+- Tavily (url extraction)
