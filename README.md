@@ -167,15 +167,33 @@ This is a simple project, demonstrating how rag works in langchain / langgraph.
 </br>
 </br>
 
-# 🛠 Installation
+## 🛠 Installation 
 ---
-## 1. Clone the Repository
+### 1. Clone the Repository
 ```bash
 git clone git@github.com:jenasuraj/Ai_agents.git
+```
+### 2. Go to projects
+```bash
 cd projects
+```
+### 3. Create a virtual env
+```bash
 python -m venv venv
+```
+### 4. activate it
+```bash
 venv\Scripts\Activate
+```
+### 5. Install the requirements.txt
+```bash
 pip install -r requirements.txt
+```
+### 6. Run any agent !
+```bash
 Run python ___.py
+```
+
+### Now in order to run and install mcp, do the same procedure, but i would suggest you to use uv for installation ⬇️.
 
 
