@@ -162,3 +162,20 @@ This is a simple project, demonstrating how rag works in langchain / langgraph.
 - OpenRouter LLMs (GPT-4o-mini, Llama-4, Gemini-2.5-Flash)
 - Huggingface (embedding model)
 - Beautiful soup - (url fetching)
+
+
+</br>
+</br>
+
+# 🛠 Installation
+---
+## 1. Clone the Repository
+```bash
+git clone git@github.com:jenasuraj/Ai_agents.git
+cd projects
+python -m venv venv
+venv\Scripts\Activate
+pip install -r requirements.txt
+Run python ___.py
+
+
