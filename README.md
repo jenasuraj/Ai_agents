@@ -42,14 +42,6 @@ Scrapper Agent (Agent-1) is an intelligent assistant that can search the web, sc
 - **Weather Lookup (OpenWeather API)** → Provides real-time temperature for any city
 - **Reasoning Agent** → Uses `create_react_agent` to choose the right tool automatically
 
-## 🛠️Tech Stack
-- LangGraph (state-based graph execution)
-- LangChain (LLM orchestration + tools)
-- OpenRouter LLMs (Google Gemini 2.5 Flash in this setup)
-- Firecrawl API (content scraping)
-- Tavily API (URL extraction/search)
-- OpenWeather API (weather data)
-
 </br>
 
 ## Podcast Agent (Agent-2)
@@ -62,13 +54,6 @@ AuralAI is an AI-powered podcast agent that can generate engaging podcasts on an
 - **Text-to-Speech (ElevenLabs)** → Converts podcaster and guest text into high-quality audio
 - **Streamlit UI** → Allows users to input a podcast topic and play generated audio
 
-## 🛠️Tech Stack
-- LangGraph (state-based graph execution)
-- LangChain & ChatGroq (LLM orchestration)
-- OpenRouter LLMs (Google Gemini 2.5 Flash)
-- ElevenLabs API (Text-to-Speech)
-- Streamlit (interactive web interface)
-
 </br>
 
 ## Stock Agent (Agent-3)
@@ -79,14 +64,6 @@ Stock Agent (Agent-3) is an AI-powered financial assistant that provides real-ti
 - **Indian Market Data (NSE / MoneyControl via Firecrawl)** → Provides stock and index data from Indian markets
 - **Financial News ( Firecrawl)** → Extracts news articles and performs sentiment analysis
 - **Reasoning Agent** → Uses `create_react_agent` to automatically decide whether to pull data from markets, news, or social sentiment
-
-## 🛠️Tech Stack
-- LangGraph (state-based graph execution)
-- LangChain (LLM orchestration + tools)
-- OpenRouter LLMs (Google Gemini 2.5 Flash)
-- Alpha Vantage API (global stock data)
-- NSE / MoneyControl (Indian stock data)
-- Firecrawl API (financial news scraping)
 
 </br>
 
@@ -99,14 +76,6 @@ GitHub Agent (Agent-4) is an AI-powered assistant that can interact with GitHub 
 - **README Management** → Updates, enhances, and maintains README.md files
 - **Content Generation** → Creates comprehensive documentation based on code analysis
 - **Version Control Integration** → Commits changes with meaningful messages
-
-## 🛠️Tech Stack
-- Model Context Protocol (MCP) SDK
-- GitHub REST API
-- PyGithub library
-- LangGraph (state-based graph execution)
-- LangChain (LLM orchestration + tools)
-- OpenRouter LLMs (Google Gemini 2.5 Flash)
 
 
 </br>
@@ -121,14 +90,6 @@ A sophisticated dual-agent system that acts as your research assistant and Notio
 - **MCP Server** → Implements Model Context Protocol for clean tool management
 - **Conversational UI** → Interact naturally through a simple chat interface
 
-## 🛠️Tech Stack
-- LangGraph + LangChain (multi-agent orchestration)
-- OpenRouter LLMs (GPT-4o-mini, Llama-4, Gemini-2.5-Flash)
-- Notion API (database management)
-- Tavily API (web search)
-- Firecrawl API (content extraction)
-- MCP (Model Context Protocol implementation)
-
 
 </br>
 
@@ -142,11 +103,6 @@ An advanced research assistant that performs deep web research, scrapes high-qua
 - **Structured Final Output** → Produces a clean, well-organized result for easy consumption  
 - **Prompt-Centric Architecture** → Fully driven by prompt instructions for flexibility  
 
-## 🛠️Tech Stack
-- LangGraph + LangChain (agent orchestration)
-- OpenRouter LLMs (GPT-4o-mini, Llama-4, Gemini-2.5-Flash)
-- Firecrawl  (content extraction)
-- Tavily (url extraction)
 </br>
 
 
@@ -157,11 +113,6 @@ This is a simple project, demonstrating how rag works in langchain / langgraph.
 - **Docs/url splitting** → you can provide urls / pdfs / text base 
 - **rag retrieval** → connect your llm with vector store to unlock rag !  
 
-## 🛠️Tech Stack
-- LangGraph + LangChain (agent orchestration)
-- OpenRouter LLMs (GPT-4o-mini, Llama-4, Gemini-2.5-Flash)
-- Huggingface (embedding model)
-- Beautiful soup - (url fetching)
 
 
 </br>
@@ -194,6 +145,12 @@ pip install -r requirements.txt
 Run python ___.py
 ```
 
-### Now in order to run and install mcp, do the same procedure, but i would suggest you to use uv for installation ⬇️.
+Now in order to run and install mcp, do the same procedure, but i would suggest you to use uv for installation ⬇️🤗.
+<a href="https://www.linkedin.com/in/suraj-jena-0991a121a/">
+    <img src="https://img.shields.io/badge/-Follow%20Suraj%20Jena-blue?logo=linkedin&style=flat-square" alt="LinkedIn">
+  </a>
+  <a href="https://x.com/jenasuraj_">
+    <img src="https://img.shields.io/twitter/follow/jenasuraj_" alt="Twitter">
+</a>
 
 
