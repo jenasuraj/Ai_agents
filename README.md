@@ -27,7 +27,7 @@ Welcome to the hub of specialized AI agents. This repository is a cutting-edge d
 | **Agent-4** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/github_agent.py"> **Github Agent**</a> | Automated repository management & documentation | GitHub API, MCP SDK, PyGithub |
 | **Agent-5** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/notion_agent.py">**Notion Copilot**</a> | Research, content structuring & Notion automation | Notion API, Tavily, Firecrawl |
 | **Agent-6** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/deep_research.py"> **Deep research Agent**</a> | Intelligent deep research  | Tavily, Firecrawl |
-
+| **Agent-7** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/rag.py"> **RAG**</a> | RAG retrieval  | Huggingface |
 
 </br>
 </br>
@@ -147,3 +147,18 @@ An advanced research assistant that performs deep web research, scrapes high-qua
 - OpenRouter LLMs (GPT-4o-mini, Llama-4, Gemini-2.5-Flash)
 - Firecrawl  (content extraction)
 - Tavily (url extraction)
+</br>
+
+
+## RAG (Agent-7)
+This is a simple project, demonstrating how rag works in langchain / langgraph.
+
+## ✨Features
+- **Docs/url splitting** → you can provide urls / pdfs / text base 
+- **rag retrieval** → connect your llm with vector store to unlock rag !  
+
+## 🛠️Tech Stack
+- LangGraph + LangChain (agent orchestration)
+- OpenRouter LLMs (GPT-4o-mini, Llama-4, Gemini-2.5-Flash)
+- Huggingface (embedding model)
+- Beautiful soup - (url fetching)
