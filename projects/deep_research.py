@@ -16,7 +16,6 @@ from tavily import TavilyClient
 from langgraph.checkpoint.memory import InMemorySaver
 
 
-
 checkpointer = InMemorySaver()
 
 class State(TypedDict):
