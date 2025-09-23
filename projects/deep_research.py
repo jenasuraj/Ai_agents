@@ -14,6 +14,7 @@ import os,json
 from langgraph.prebuilt import create_react_agent
 from tavily import TavilyClient
 from langgraph.checkpoint.memory import InMemorySaver
+from deepagents import create_deep_agent
 
 
 checkpointer = InMemorySaver()
@@ -199,7 +200,11 @@ def final(state: State):
     - Expand on Member-1’s plan with details from the scraped content.  
     - End with a final recommendation / action plan for the user.
     """
-    agent = create_react_agent(model=llm, tools=[content_scrapper], prompt=prompt)
+    agent = create_deep_agent(
+        tools=[url_search, content_scrapper],
+        model="",
+        instructions=prompt
+    )
     response = agent.invoke({"messages": state["messages"]})
     return {"messages": [AIMessage(content=response["messages"][-1].content)]}
 
