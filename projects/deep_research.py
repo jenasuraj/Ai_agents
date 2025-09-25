@@ -98,11 +98,8 @@ def planner(state:State):
     """)
     chain = prompt | llm
     response = chain.invoke({"messages":state["messages"]})
-    #print("response from first node is",response.content)
-    print("\n")
     return{
-        "messages":[AIMessage(content=response.content)]
-    }
+        "messages":[AIMessage(content=response.content)]}
 
 
 def url_extractor(state:State):
@@ -161,12 +158,8 @@ def url_extractor(state:State):
     """
     agent = create_react_agent(model=llm,tools=[url_search],prompt=prompt)
     response = agent.invoke({"messages":state["messages"]})
-    #print("response from second node is",response["messages"][-1].content)
-    print("\n")
-    #print("response is",response)
     return{
-        "messages":[AIMessage(content=response["messages"][-1].content)]
-    }
+        "messages":[AIMessage(content=response["messages"][-1].content)]}
 
 
 def final(state: State):
@@ -203,10 +196,7 @@ def final(state: State):
     """
     agent = create_react_agent(model=llm, tools=[content_scrapper], prompt=prompt)
     response = agent.invoke({"messages": state["messages"]})
-    #print("response from third node is",response["messages"][-1].content)
-    print("\n")
     return {"messages": [AIMessage(content=response["messages"][-1].content)]}
-
 
 
 graph_builder = StateGraph(State)
@@ -225,4 +215,3 @@ while True:
     response = graph.invoke(initial_state,{"configurable": {"thread_id": "1"}})
     print("\n")
     print(response["messages"][-1].content)
-
