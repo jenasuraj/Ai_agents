@@ -160,5 +160,4 @@ if st.button("Submit"):
             # Combine all audio bytes
             audio_bytes = b"".join(chunk for voice_gen in voice_collection for chunk in voice_gen)
             audio_base64 = base64.b64encode(audio_bytes).decode("utf-8")
-            
             st.audio(f"data:audio/mp3;base64,{audio_base64}", format="audio/mp3")

@@ -14,8 +14,6 @@ import os,json
 from langgraph.prebuilt import create_react_agent
 from tavily import TavilyClient
 from langgraph.checkpoint.memory import InMemorySaver
-
-
 checkpointer = InMemorySaver()
 
 class State(TypedDict):
@@ -31,7 +29,7 @@ llm = ChatOpenAI(
 @tool
 def url_search(input:str)->str:
     """use this tool to extract urls from the internet, provide a proper content/tagline as input"""
-    print("in tool...",input)
+    print("in url search tool...",input)
     tavily_client = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
     response = tavily_client.search(input)
     return f"response for url fetching from 'url_search' is {response}"
@@ -100,6 +98,8 @@ def planner(state:State):
     """)
     chain = prompt | llm
     response = chain.invoke({"messages":state["messages"]})
+    #print("response from first node is",response.content)
+    print("\n")
     return{
         "messages":[AIMessage(content=response.content)]
     }
@@ -161,6 +161,8 @@ def url_extractor(state:State):
     """
     agent = create_react_agent(model=llm,tools=[url_search],prompt=prompt)
     response = agent.invoke({"messages":state["messages"]})
+    #print("response from second node is",response["messages"][-1].content)
+    print("\n")
     #print("response is",response)
     return{
         "messages":[AIMessage(content=response["messages"][-1].content)]
@@ -201,6 +203,8 @@ def final(state: State):
     """
     agent = create_react_agent(model=llm, tools=[content_scrapper], prompt=prompt)
     response = agent.invoke({"messages": state["messages"]})
+    #print("response from third node is",response["messages"][-1].content)
+    print("\n")
     return {"messages": [AIMessage(content=response["messages"][-1].content)]}
 
 
