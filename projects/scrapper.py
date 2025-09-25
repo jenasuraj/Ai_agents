@@ -17,7 +17,6 @@ from langchain.prompts import PromptTemplate
 memory = InMemorySaver()
 
 
-
 llm = ChatOpenAI(
   api_key=os.getenv("OPENROUTER_API_KEY"),
   base_url=os.getenv("OPENROUTER_BASE_URL"),
@@ -73,7 +72,6 @@ def news(input:str)->str:
             return response["articles"][:5]
     except Exception as e:
         return "could not load the data error..."    
-
 
 
 prompt = """

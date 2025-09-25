@@ -32,7 +32,6 @@ client = MultiServerMCPClient(
 class State(TypedDict):
     messages:Annotated[list,add_messages]
 
-
 research_llm = ChatOpenAI(
     api_key=os.getenv("OPENROUTER_API_KEY"),
     base_url=os.getenv("OPENROUTER_BASE_URL"),

@@ -52,6 +52,7 @@ def content_extractor(input: str):
 
 
 
+
 @mcp.tool()
 def id_extractor(input: str) -> str:
     """
@@ -70,6 +71,7 @@ def id_extractor(input: str) -> str:
             if title_parts:
                 title = title_parts[0]["plain_text"]
         page_dict[title] = page["id"]
+    print(page_dict)
     return f"Block IDs of Notion pages along with their names: {page_dict}"
 
 
@@ -77,32 +79,41 @@ def id_extractor(input: str) -> str:
 
 
 @mcp.tool()
-def insert_content(input: str,content):
-    """Use this tool to insert content/data in your blocks/pages in notion database, so for that provide input as block_id and also provide the content you want to insert"""
+def insert_content(input: str, content):
+    """Insert content/data in Notion blocks. Input: block_id, content: JSON string or Python dict/list"""
+    print("i am in insert content tool ... input is", input, "and content is", content)
+
     url = f'https://api.notion.com/v1/blocks/{input}/children'
     headers = {
-        "Authorization": f"Bearer {os.getenv('NOTION_TOKEN_NO')}",
+        "Authorization": f"Bearer {os.getenv("NOTION_TOKEN_NO")}",
         "Content-Type": "application/json",
-        "Notion-Version": "2022-06-28"}
-    updated_content = json.loads(content)
-    data = {
-    "children":updated_content
-           }
-    
-    print("data is", json.dumps(data,indent=4))
+        "Notion-Version": "2022-06-28"
+    }
+
+    # Ensure content is always a Python list/dict
+    if isinstance(content, str):
+        try:
+            updated_content = json.loads(content)
+        except Exception:
+            raise ValueError(f"Content string is not valid JSON: {content}")
+    else:
+        updated_content = content  # already parsed
+
+    data = {"children": updated_content}
+    print("data is", json.dumps(data, indent=4))
 
     try:
         response = requests.patch(url, headers=headers, json=data)
         print("Status code:", response.status_code)
         print("Response text:", response.text)
-        
+
         if response.ok:
             return "✅ Content inserted successfully."
         else:
             return f"❌ Could not insert content. Status: {response.status_code}\nResponse: {response.text}"
     except Exception as e:
         return f"🚨 Could not make a request to Notion: {e}"
-         
+
 
 
 if __name__ == "__main__":
