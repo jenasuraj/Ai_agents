@@ -94,6 +94,7 @@ Usage guidelines:
 """
 
 def agent_func(state:State):
+    print("the state is",state)
     tools = [urlExtractor,weather,contentScrapper,news]
     agent = create_react_agent(tools=tools,model=llm,prompt=prompt)
     response = agent.invoke(state)
@@ -128,6 +129,6 @@ graph = graph_builder.compile(checkpointer=memory)
 while True:
     inputData = input("Enter : ")
     config = {"configurable": {"thread_id": "1"}}
-    initial_state = {"messages":[{"role":"user","content":inputData}]}
+    initial_state = {"messages":inputData}
     response = graph.invoke(initial_state, config,stream_mode="values")
     print(response["messages"][-1].content)

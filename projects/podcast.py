@@ -37,12 +37,12 @@ def podcaster(state:State):
     print("Entered podcaster node...")
     title = state["messages"][-1].content
     podcaster_prompt = PromptTemplate.from_template("""
-    You are a podcast host person named suraj and your job is to make a podcast
+    User's title: {title} .
+    You are a podcast host person named suraj and your job is to make a podcast and your guest is miss jenna.
     as a podcast hoster. So you are doing a podcast and make a podcast 
     as per the user's title. If user's title is ex:artificial intelligence,
     then you have to start the podcast by welcoming your guest and greetings and
     start asking questions, you have to ask 5 questions to your guest and also add amazing sence of humour  !
-    User's title: {title} 
     Instruction: Dont try to be lengthy, your podcast and conversation must be within 150 words, dont exceed it, you have to obey it.                                                                                                                                                                                                                                                                                                                                               
     """)
     podcaster_chain = podcaster_prompt | groq_llm
@@ -57,13 +57,12 @@ def guest(state:State):
     podcast_data = state["podcaster_data"][-1].content
     guest_prompt = PromptTemplate.from_template("""
     You are a very intelligent person who got invited to a podcast and your name is jena,
-    You have your podcast host data i.e {title}.
-    You have some few questions to answer so talk with your podcaster very happily
+    You have your podcaster conversation {title}.
+    You have to analyse each question and conversation of your podcaster and You have some few questions to answer so talk with your podcaster very happily
     and answer each question very well and have a nice sence of humour and discussion. 
     Instruction: Dont try to be lengthy, your response and conversation must be within 150 words, dont exceed it, you have to obey it.
     So inorder to make it short and simple conversation, try to answer podcast host's question very minimally and have less conversation.                                                                                        
     """)
-    title = state["messages"][-1].content
     guest_chain = guest_prompt | groq_llm
     response = guest_chain.invoke({"title":podcast_data})
     return{
@@ -99,7 +98,6 @@ def final_agent(state:State):
     ]
     Output must be **valid JSON**.
     """)
-    
     final_message = {"podcaster":podcast_data,"guest":guest_data} 
     final_chain = prompt | llm
     response = final_chain.invoke(final_message)
@@ -118,6 +116,8 @@ graph_builder.add_edge("podcaster", "guest")
 graph_builder.add_edge("guest", "final_agent")
 graph_builder.add_edge("final_agent", END)
 graph = graph_builder.compile()
+
+
 
 # Streamlit app
 st.title("AuralAI ⚛")
@@ -146,7 +146,7 @@ if st.button("Submit"):
                     if podcaster_tts:
                         voice_collection.append(podcaster_tts)
 
-                elif item.get("guest"):
+                if item.get("guest"):
                     guest_tts = client.text_to_speech.convert(
                         text=item["guest"],
                         voice_id="eRALiEwGnmo3g1ze76Y2",

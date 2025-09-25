@@ -304,7 +304,6 @@ async def routing_condition(state: State):
 
 
 
-
 graph_builder = StateGraph(State)
 graph_builder.add_node("research",research)
 graph_builder.add_node("assistant",assistant)
