@@ -5,6 +5,7 @@ from tavily import TavilyClient
 from langchain_openai import ChatOpenAI
 load_dotenv()
 import os
+from langgraph.prebuilt import create_react_agent
 import requests
 from typing import Annotated
 from typing_extensions import TypedDict
@@ -12,9 +13,8 @@ from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from langchain_core.messages import AIMessage
 from langgraph.checkpoint.memory import InMemorySaver
-from langchain_core.prompts import PromptTemplate
+from langchain.prompts import PromptTemplate
 memory = InMemorySaver()
-from langchain.agents import create_agent
 
 
 llm = ChatOpenAI(
@@ -92,9 +92,9 @@ Usage guidelines:
 """
 
 def agent_func(state:State):
-    #print("the state is",state)
+    print("the state is",state)
     tools = [urlExtractor,weather,contentScrapper,news]
-    agent = create_agent(tools=tools,model=llm,prompt=prompt)
+    agent = create_react_agent(tools=tools,model=llm,prompt=prompt)
     response = agent.invoke(state)
     return {"messages":[AIMessage(content=response["messages"][-1].content)]}
 

@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from typing import Annotated
 from typing_extensions import TypedDict
 from langchain_mcp_adapters.client import MultiServerMCPClient
-from langgraph.prebuilt import create_react_agent
+from langchain.agents import create_agent
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from langchain_core.messages import AIMessage
@@ -12,7 +12,6 @@ from langchain_openai import ChatOpenAI
 load_dotenv()
 from langchain.tools import tool
 import requests
-
 
 class State(TypedDict):
     messages: Annotated[list, add_messages]
@@ -51,7 +50,7 @@ async def main_node(state: State):
     mcptools = await client.get_tools()
     localtools = [vintage]
     tools = mcptools+localtools
-    agent = create_react_agent(model=llm, tools=tools)
+    agent = create_agent(model=llm, tools=tools)
     response = await agent.ainvoke({"messages":[{"role":"user","content":state["messages"][-1].content}]})
     print("response is",response["messages"][-1].content)
     return {"messages": [AIMessage(content=response["messages"][-1].content)]}

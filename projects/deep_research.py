@@ -8,10 +8,10 @@ from typing_extensions import TypedDict
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from langchain_core.messages import AIMessage
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langgraph.checkpoint.memory import InMemorySaver
 import os,json
-from langgraph.prebuilt import create_react_agent
+from langchain.agents import create_agent
 from tavily import TavilyClient
 from langgraph.checkpoint.memory import InMemorySaver
 checkpointer = InMemorySaver()
@@ -156,7 +156,7 @@ def url_extractor(state:State):
     Each query must be present exactly once with its resolved URL.
     Never invent fake URLs — use url_search results only.
     """
-    agent = create_react_agent(model=llm,tools=[url_search],prompt=prompt)
+    agent = create_agent(model=llm,tools=[url_search],prompt=prompt)
     response = agent.invoke({"messages":state["messages"]})
     return{
         "messages":[AIMessage(content=response["messages"][-1].content)]}
@@ -194,7 +194,7 @@ def final(state: State):
     - Expand on Member-1’s plan with details from the scraped content.  
     - End with a final recommendation / action plan for the user.
     """
-    agent = create_react_agent(model=llm, tools=[content_scrapper], prompt=prompt)
+    agent = create_agent(model=llm, tools=[content_scrapper], prompt=prompt)
     response = agent.invoke({"messages": state["messages"]})
     return {"messages": [AIMessage(content=response["messages"][-1].content)]}
 

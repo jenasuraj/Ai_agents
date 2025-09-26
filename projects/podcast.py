@@ -3,11 +3,11 @@ import base64
 from dotenv import load_dotenv
 import streamlit as st
 from langchain_openai import ChatOpenAI
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from elevenlabs.client import ElevenLabs
 from elevenlabs import VoiceSettings
 load_dotenv()
-from langgraph.prebuilt import create_react_agent
+from langchain.agents import create_agent
 from typing import Annotated
 from typing_extensions import TypedDict
 from langgraph.graph import StateGraph, START, END

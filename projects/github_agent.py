@@ -4,14 +4,14 @@ from langchain.tools import tool
 from langchain_openai import ChatOpenAI
 load_dotenv()
 import os
-from langgraph.prebuilt import create_react_agent
+from langchain.agents import create_agent
 import requests
 from typing import Annotated
 from typing_extensions import TypedDict
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from langchain_core.messages import AIMessage
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langchain_mcp_adapters.client import MultiServerMCPClient
 import asyncio
 from langgraph.checkpoint.memory import InMemorySaver
@@ -62,7 +62,7 @@ async def first(state:State):
     reconfirm to user that, whether you have to do that specific task regarding github because it's risky.
     """
     tools = await client.get_tools()
-    agent = create_react_agent(model=llm,tools=tools,prompt=prompt)
+    agent = create_agent(model=llm,tools=tools,prompt=prompt)
     response =await agent.ainvoke({"messages":state["messages"]})
     return{
        "messages":[AIMessage(content=response["messages"][-1].content)]

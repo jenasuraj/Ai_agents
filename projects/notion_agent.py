@@ -3,13 +3,13 @@ from langchain.tools import tool
 from langchain_openai import ChatOpenAI
 load_dotenv()
 import os
-from langgraph.prebuilt import create_react_agent
+from langchain.agents import create_agent
 from typing import Annotated
 from typing_extensions import TypedDict
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from langchain_core.messages import AIMessage
-from langchain.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate
 from langchain_mcp_adapters.client import MultiServerMCPClient
 import asyncio
 from langgraph.checkpoint.memory import InMemorySaver
@@ -209,7 +209,7 @@ async def research(state: State):
     ```
     """
     tools = [tavily, contentScrapper]
-    agent = create_react_agent(model=research_llm, tools=tools, prompt=prompt)
+    agent = create_agent(model=research_llm, tools=tools, prompt=prompt)
     response = await agent.ainvoke({"messages": state["messages"]})
     #print("response ->",response["messages"][-1].content)
     return {
@@ -260,7 +260,7 @@ async def assistant(state: State):
     If no block ID is found, it means the requested block does not exist. In that case, provide the user with a detailed response explaining that the block is invalid or not found.  
     """
     mcpTools = await client.get_tools()
-    agent = create_react_agent(model=reasoning_llm, tools=mcpTools, prompt=prompt)
+    agent = create_agent(model=reasoning_llm, tools=mcpTools, prompt=prompt)
     response = await agent.ainvoke({"messages":state["messages"]})
     return {
         "messages": [AIMessage(content=response["messages"][-1].content)]
