@@ -2,7 +2,6 @@ import os
 from dotenv import load_dotenv
 from typing import Annotated
 from typing_extensions import TypedDict
-from langchain_mcp_adapters.client import MultiServerMCPClient
 from langchain.agents import create_agent
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
@@ -19,7 +18,7 @@ class State(TypedDict):
 llm = ChatOpenAI(
     api_key=os.getenv("OPENROUTER_API_KEY"),
     base_url=os.getenv("OPENROUTER_BASE_URL"),
-    model="google/gemini-2.5-flash",)
+    model="x-ai/grok-4-fast",)
 
 
 @tool
