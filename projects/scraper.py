@@ -82,19 +82,28 @@ def routing(state:State):
         return "No"   
 
 
-def toolCall(state:State):
-    print("in tool call",state["messages"][-1])
+def toolCall(state: State):
     outputs = []
-    for tool_call in state["messages"][-1].tool_calls:
-        tool_result = tools_by_name[tool_call["name"]].invoke(tool_call["args"])
+    last_msg = state["messages"][-1]
+    for tool_call in last_msg.tool_calls:
+        tool_name = tool_call["name"]
+        args = tool_call["args"]["input"]
+        if tool_name == "urlExtractor":
+            response = urlExtractor.invoke(args)
+        elif tool_name == "contentScrapper":
+            response = contentScrapper.invoke(args)
+        elif tool_name == "news":
+            response = news.invoke(args)
+        else:
+            response = f"Unknown tool: {tool_name}"
         outputs.append(
             ToolMessage(
-                content=json.dumps(tool_result),
-                name=tool_call["name"],
-                tool_call_id=tool_call["id"],
+                content=str(response),
+                tool_call_id=tool_call["id"]
             )
         )
     return {"messages": outputs}
+
 
 
 graph_builder = StateGraph(State)
