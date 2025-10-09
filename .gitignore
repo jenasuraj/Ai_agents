@@ -4,3 +4,4 @@ venv
 sample.py
 p.py
 mcp_server
+myConnect.session.sql

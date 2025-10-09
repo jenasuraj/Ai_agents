@@ -1,5 +1,4 @@
 import os
-import asyncio
 from dotenv import load_dotenv
 from typing import Annotated
 from typing_extensions import TypedDict
@@ -20,18 +19,8 @@ class State(TypedDict):
 llm = ChatOpenAI(
     api_key=os.getenv("OPENROUTER_API_KEY"),
     base_url=os.getenv("OPENROUTER_BASE_URL"),
-    model="google/gemini-2.5-flash",
-    temperature=0.5,
-    top_p=0.4,)
+    model="google/gemini-2.5-flash",)
 
-client = MultiServerMCPClient(
-    {
-        "myserver": {
-            "url": "http://127.0.0.1:8000/mcp",
-            "transport": "streamable_http",
-        }
-    }
-)
 
 @tool
 async def vintage(input:str)->str:
@@ -46,12 +35,10 @@ async def vintage(input:str)->str:
         return "error !"
 
 
-async def main_node(state: State):
-    mcptools = await client.get_tools()
-    localtools = [vintage]
-    tools = mcptools+localtools
+def main_node(state: State):
+    tools = [vintage]
     agent = create_agent(model=llm, tools=tools)
-    response = await agent.ainvoke({"messages":[{"role":"user","content":state["messages"][-1].content}]})
+    response = agent.ainvoke({"messages":[{"role":"user","content":state["messages"][-1].content}]})
     print("response is",response["messages"][-1].content)
     return {"messages": [AIMessage(content=response["messages"][-1].content)]}
 
@@ -63,11 +50,8 @@ graph_builder.add_edge("main_node",END)
 graph = graph_builder.compile()
 
 
-async def main():
-    while True:
-        inputQuery = input("Enter stock name : ")
-        initial_state = {"messages": [{"role": "user", "content": inputQuery}]}
-        response = await graph.ainvoke(initial_state) 
-        print(response["messages"][-1].content)
-if __name__ == "__main__":
-    asyncio.run(main())
+while True:
+    inputQuery = input("Enter stock name : ")
+    initial_state = {"messages": [{"role": "user", "content": inputQuery}]}
+    response =  graph.ainvoke(initial_state) 
+    print(response["messages"][-1].content)

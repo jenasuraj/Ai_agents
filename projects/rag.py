@@ -1,30 +1,25 @@
 from firecrawl import Firecrawl
 from dotenv import load_dotenv
 from langchain.tools import tool
-from tavily import TavilyClient
 from langchain_openai import ChatOpenAI
 load_dotenv()
 import os
-from langgraph.prebuilt import create_react_agent
-import requests
 from typing import Annotated
 from typing_extensions import TypedDict
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
-from langchain_core.messages import AIMessage
+from langchain_core.messages import AIMessage,SystemMessage,HumanMessage
 from langgraph.checkpoint.memory import InMemorySaver
-from langchain.prompts import PromptTemplate
 memory = InMemorySaver()
-import bs4
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_core.vectorstores import InMemoryVectorStore
 from langchain_huggingface import HuggingFaceEmbeddings
+from langchain.agents import create_agent
 
 
 loader = WebBaseLoader(
-    web_paths=("https://surajjena.com/",),
+    web_paths=("https://subodhjena.com/",),
 )
 docs = loader.load()
 text_splitter = RecursiveCharacterTextSplitter(
@@ -40,6 +35,16 @@ print("data added to v-db")
 retriever = vector_store.as_retriever(search_kwargs={"k": 5})
 
 
+@tool
+def ragdb(input:str):
+    """use this tool to interact with the rag or personal data base"""
+    print("i am in ragdb")
+    rag_res = retriever.invoke(input)
+    updated_response = '/n/n'.join([i.page_content for i in rag_res])
+    return updated_response
+
+
+
 llm = ChatOpenAI(
   api_key=os.getenv("OPENROUTER_API_KEY"),
   base_url=os.getenv("OPENROUTER_BASE_URL"),
@@ -52,11 +57,18 @@ class State(TypedDict):
 
 
 def agent_func(state:State):
-    res = retriever.invoke(state["messages"][-1].content)
-    response = '/n/n'.join([i.page_content for i in res])
+    prompt = """
+    You are a very helpful assistant, and your job is to analyse the user query and
+    decide whether its a general call or its a database call ?. 
+    Basically database has all the information regarding mr subodh jena, so if user query is regarding subodh jena, use tools like ragdb.
+    and if user query is not related to subodh jena, dont use any tool and answer user's demand friendly way.
+    """
+    agent = create_agent(model=llm,tools=[ragdb],prompt=prompt)
+    response = agent.invoke({"messages":state["messages"]})
     return {
-        "messages":[AIMessage(content=response)]
+        "messages":[AIMessage(content=response["messages"][-1].content)]
     }
+
 
 graph_builder = StateGraph(State)
 graph_builder.add_node("agent_func",agent_func)
