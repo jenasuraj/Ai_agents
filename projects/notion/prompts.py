@@ -1,92 +1,31 @@
-from dotenv import load_dotenv
-from langchain.tools import tool
-from langchain_openai import ChatOpenAI
-load_dotenv()
-import os
-from langchain.agents import create_agent
-from typing import Annotated
-from typing_extensions import TypedDict
-from langgraph.graph import StateGraph, START, END
-from langgraph.graph.message import add_messages
-from langchain_core.messages import AIMessage
 from langchain_core.prompts import PromptTemplate
-from langchain_mcp_adapters.client import MultiServerMCPClient
-import asyncio
-from langgraph.checkpoint.memory import InMemorySaver
-from langchain.tools import tool
-from tavily import TavilyClient
-from firecrawl import Firecrawl
-from langchain_groq import ChatGroq
+
+routing_prompt = PromptTemplate.from_template("""
+    User's conversation: {messages}
+
+    undertand and analyse the User's conversation from top to lower, the lower portion of conversation is the latest data from user and the upper one's are the previous conversation.
+    Based on user's conversation analyse and decide what user's intention is ? whether if its a notion related or database related task then return "yes" otherwise return "no".   
+    The user's conversation is diversed so understand the history very well and decide what user's current intension is all about.                                                                                                               
+    You are a decision agent. Analyze the user's conversation carefully and determine if it involves **Notion-related tasks** such as notes, pages, databases, or any actions on Notion.  
+    Your response must be **either "yes" or "no" ONLY**.  
+
+    Rules:
+    1. Return "yes" if the conversation involves saving, inserting, updating, or deleting data.
+    2. Return "yes" if the conversation mentions pages, databases, notes, or storing content (even if the exact Notion page is not specified).
+    3. Return "yes" if the user mentions any noun with verbs like "save", "store", "insert", "update", or "delete".
+    4. Return "no" if the conversation is unrelated to Notion tasks (e.g., asking about travel plans, calculations, or general discussion without storage intent).
+
+    Examples:
+    - "Save my travel plan to Selenium" → yes
+    - "List all my Notion pages" → yes
+    - "Write an essay for me" → no
+    - "Plan a 5-day trip" → no
+
+    Strictly respond with "yes" or "no" only. Do not add explanations.
+    """)
 
 
-checkpointer = InMemorySaver()
-client = MultiServerMCPClient(
-    {
-     "notion_server": {
-            "url": "http://127.0.0.1:8000/mcp",
-            "transport": "streamable_http",
-        }
-    }
-)
-
-class State(TypedDict):
-    messages:Annotated[list,add_messages]
-
-research_llm = ChatOpenAI(
-    api_key=os.getenv("OPENROUTER_API_KEY"),
-    base_url=os.getenv("OPENROUTER_BASE_URL"),
-    model="google/gemini-2.5-flash",
-    temperature=0.2)
-    
-fast_llm = ChatGroq(model='meta-llama/llama-4-scout-17b-16e-instruct')
-
-reasoning_llm = ChatOpenAI(
-    api_key=os.getenv("OPENROUTER_API_KEY"),
-    base_url=os.getenv("OPENROUTER_BASE_URL"),
-    model='openai/gpt-4o-mini',
-    max_completion_tokens=2000,
-    temperature=0.1,)
-
-
-
-@tool
-def tavily(input: str) -> str:
-    """
-    Fetch current information from the internet.
-    Input: Query (e.g., current news, latest events).
-    Output: Summarized result from Tavily.
-    """
-    print("Running tavily tool with input:", input)
-    client = TavilyClient(os.getenv("TAVILY_API_KEY"))
-    response = client.search(query=input)
-    return response
-
-
-@tool
-def contentScrapper(input: str) -> str:
-    """
-    Scrape content from a web page using Firecrawl.
-    Input: A valid URL (e.g., https://en.wikipedia.org/wiki/India).
-    Output: Extracted content (up to 1500 characters) in markdown or HTML format.
-    """
-    print("Running contentScrapper with input:", input)
-    firecrawl = Firecrawl(api_key=os.getenv("FIRECRAWL_API_KEY"))
-    doc = firecrawl.scrape(input, formats=["markdown", "html"])
-    if "markdown" in doc:
-        content = doc["markdown"][:1500]
-    elif "html" in doc:
-        content = doc["html"][:1500]
-    else:
-        content = str(doc)
-    print("Returning scraped content to LangGraph...")
-    return content
-
-
-
-async def research(state: State):
-    print("i am in research")
-    print("\n")
-    prompt = """
+research_prompt = """
     You are Person 1 in a two-person company setup.  
     Your role is to act as a **friendly, expert research assistant** who:
     - Generates research-based, insightful content.
@@ -208,18 +147,8 @@ async def research(state: State):
     ]
     ```
     """
-    tools = [tavily, contentScrapper]
-    agent = create_agent(model=research_llm, tools=tools, prompt=prompt)
-    response = await agent.ainvoke({"messages": state["messages"]})
-    #print("response ->",response["messages"][-1].content)
-    return {
-        "messages": [AIMessage(content=response["messages"][-1].content)]
-    }
 
-
-async def assistant(state: State):
-    print("i am in assistant !")
-    prompt = """
+assistant_prompt = """
     You are a friendly Notion assistant.  
     Your task is to use the provided tools to interact with a Notion database effectively.
 
@@ -259,67 +188,3 @@ async def assistant(state: State):
 
     If no block ID is found, it means the requested block does not exist. In that case, provide the user with a detailed response explaining that the block is invalid or not found.  
     """
-    mcpTools = await client.get_tools()
-    agent = create_agent(model=reasoning_llm, tools=mcpTools, prompt=prompt)
-    response = await agent.ainvoke({"messages":state["messages"]})
-    return {
-        "messages": [AIMessage(content=response["messages"][-1].content)]
-    }
-
-
-async def routing_condition(state: State):
-    print("I am in routing agent!")
-    print("\n")
-    prompt = PromptTemplate.from_template("""
-    User's conversation: {messages}
-
-    undertand and analyse the User's conversation from top to lower, the lower portion of conversation is the latest data from user and the upper one's are the previous conversation.
-    Based on user's conversation analyse and decide what user's intention is ? whether if its a notion related or database related task then return "yes" otherwise return "no".   
-    The user's conversation is diversed so understand the history very well and decide what user's current intension is all about.                                                                                                               
-    You are a decision agent. Analyze the user's conversation carefully and determine if it involves **Notion-related tasks** such as notes, pages, databases, or any actions on Notion.  
-    Your response must be **either "yes" or "no" ONLY**.  
-
-    Rules:
-    1. Return "yes" if the conversation involves saving, inserting, updating, or deleting data.
-    2. Return "yes" if the conversation mentions pages, databases, notes, or storing content (even if the exact Notion page is not specified).
-    3. Return "yes" if the user mentions any noun with verbs like "save", "store", "insert", "update", or "delete".
-    4. Return "no" if the conversation is unrelated to Notion tasks (e.g., asking about travel plans, calculations, or general discussion without storage intent).
-
-    Examples:
-    - "Save my travel plan to Selenium" → yes
-    - "List all my Notion pages" → yes
-    - "Write an essay for me" → no
-    - "Plan a 5-day trip" → no
-
-    Strictly respond with "yes" or "no" only. Do not add explanations.
-    """)
-    chain = prompt | research_llm
-    response = await chain.ainvoke({"messages": state["messages"]})
-    print(response.content)
-    if "no" in response.content.lower():
-        return "no"
-    elif "yes" in response.content.lower():
-        return "yes"
-
-
-
-graph_builder = StateGraph(State)
-graph_builder.add_node("research",research)
-graph_builder.add_node("assistant",assistant)
-graph_builder.add_edge(START,"research")
-graph_builder.add_conditional_edges("research",routing_condition,{"yes":"assistant","no":END})
-graph_builder.add_edge("assistant",END)
-graph = graph_builder.compile(checkpointer=checkpointer)
-
-
-async def main():
-    while True:
-        inputQuery = input("ENTER : ")
-        initial_state = {
-        "messages":[{"role":"user","content":inputQuery}]
-        }
-        response =await graph.ainvoke(initial_state,{"configurable": {"thread_id": "1"}},) 
-        print(response["messages"][-1].content) 
-
-if __name__ == "__main__":
-    asyncio.run(main())
