@@ -21,7 +21,7 @@ Welcome to the hub of specialized AI agents. This repository is a cutting-edge d
 
 | Agent | Name | Primary Function | Key Tools & APIs |
 | :--- | :--- | :--- | :--- |
-| **Agent-1** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/scrapper.py"> **Scrapper Agent**</a> | Intelligent web research & data extraction | Tavily, Firecrawl |
+| **Agent-1** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/scraper"> **Scraper Agent**</a> | Intelligent web research & data extraction | Tavily, Firecrawl |
 | **Agent-2** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/podcast.py"> **Podcast Agent**</a> | Dynamic podcast generation & text-to-speech | ChatGroq, ElevenLabs, Streamlit |
 | **Agent-3** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/stock.py"> **Stock Agent**</a> | Real-time financial market analysis & news | Alpha Vantage, NSE, MoneyControl |
 | **Agent-4** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/github_agent.py"> **Github Agent**</a> | Automated repository management & documentation | GitHub API, MCP SDK, PyGithub |
@@ -32,7 +32,7 @@ Welcome to the hub of specialized AI agents. This repository is a cutting-edge d
 </br>
 
 
-## Scrapper Agent (Agent-1)
+## Scraper Agent (Agent-1)
 Scrapper Agent (Agent-1) is an intelligent assistant that can search the web, scrape detailed content from URLs, and fetch real-time weather information. It uses a reasoning agent to decide which tool to call, providing accurate and structured responses to user queries.
 
 ## ✨Features
