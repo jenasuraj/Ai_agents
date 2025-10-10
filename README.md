@@ -21,13 +21,12 @@ Welcome to the hub of specialized AI agents. This repository is a cutting-edge d
 
 | Agent | Name | Primary Function | Key Tools & APIs |
 | :--- | :--- | :--- | :--- |
-| **Agent-1** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/scrapper.py"> **Scrapper Agent**</a> | Intelligent web research & data extraction | Tavily, Firecrawl, OpenWeather |
+| **Agent-1** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/scrapper.py"> **Scrapper Agent**</a> | Intelligent web research & data extraction | Tavily, Firecrawl |
 | **Agent-2** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/podcast.py"> **Podcast Agent**</a> | Dynamic podcast generation & text-to-speech | ChatGroq, ElevenLabs, Streamlit |
 | **Agent-3** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/stock.py"> **Stock Agent**</a> | Real-time financial market analysis & news | Alpha Vantage, NSE, MoneyControl |
 | **Agent-4** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/github_agent.py"> **Github Agent**</a> | Automated repository management & documentation | GitHub API, MCP SDK, PyGithub |
 | **Agent-5** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/notion_agent.py">**Notion Copilot**</a> | Research, content structuring & Notion automation | Notion API, Tavily, Firecrawl |
-| **Agent-6** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/deep_research.py"> **Deep research Agent**</a> | Intelligent deep research  | Tavily, Firecrawl |
-| **Agent-7** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/rag.py"> **RAG**</a> | RAG retrieval  | Huggingface |
+| **Agent-6** | <a href="https://github.com/jenasuraj/Ai_agents/blob/main/projects/rag.py"> **RAG**</a> | RAG retrieval  | Huggingface |
 
 </br>
 </br>
@@ -39,8 +38,6 @@ Scrapper Agent (Agent-1) is an intelligent assistant that can search the web, sc
 ## ✨Features
 - **Web Search (Tavily API)** → Finds relevant URLs for queries
 - **Content Scraping (Firecrawl API)** → Extracts detailed content (Markdown/HTML) from URLs
-- **Weather Lookup (OpenWeather API)** → Provides real-time temperature for any city
-- **Reasoning Agent** → Uses `create_react_agent` to choose the right tool automatically
 
 </br>
 
@@ -62,8 +59,7 @@ Stock Agent (Agent-3) is an AI-powered financial assistant that provides real-ti
 ## ✨Features
 - **Market Data (Alpha Vantage API)** → Fetches stock prices, indicators, and company data
 - **Indian Market Data (NSE / MoneyControl via Firecrawl)** → Provides stock and index data from Indian markets
-- **Financial News ( Firecrawl)** → Extracts news articles and performs sentiment analysis
-- **Reasoning Agent** → Uses `create_react_agent` to automatically decide whether to pull data from markets, news, or social sentiment
+- **Financial News ( Firecrawl)** → Extracts news articles and performs sentiment analysis sentiment
 
 </br>
 
@@ -94,19 +90,8 @@ A sophisticated dual-agent system that acts as your research assistant and Notio
 </br>
 
 
-## Deep Research Agent (Agent-6)
-An advanced research assistant that performs deep web research, scrapes high-quality content, and delivers a structured, actionable output.
 
-## ✨Features
-- **Deep Research Capability** → Automatically searches and scrapes data from multiple sources  
-- **Automated URL Scraping** → Dynamically calls the scraper tool for each discovered URL  
-- **Structured Final Output** → Produces a clean, well-organized result for easy consumption  
-- **Prompt-Centric Architecture** → Fully driven by prompt instructions for flexibility  
-
-</br>
-
-
-## RAG (Agent-7)
+## RAG (Agent-6)
 This is a simple project, demonstrating how rag works in langchain / langgraph.
 
 ## ✨Features
