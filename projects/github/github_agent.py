@@ -1,17 +1,14 @@
-from firecrawl import Firecrawl
 from dotenv import load_dotenv
 from langchain.tools import tool
 from langchain_openai import ChatOpenAI
 load_dotenv()
 import os
 from langchain.agents import create_agent
-import requests
 from typing import Annotated
 from typing_extensions import TypedDict
 from langgraph.graph import StateGraph, START, END
 from langgraph.graph.message import add_messages
 from langchain_core.messages import AIMessage
-from langchain_core.prompts import PromptTemplate
 from langchain_mcp_adapters.client import MultiServerMCPClient
 import asyncio
 from langgraph.checkpoint.memory import InMemorySaver
