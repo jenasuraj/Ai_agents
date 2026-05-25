@@ -1,0 +1,35 @@
+[project]
+name = "ai-agents"
+version = "0.1.0"
+description = "A modular multi-agent experimentation hub built with LangGraph, LangChain, MCP, and Python."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Suraj Jena" }
+]
+dependencies = [
+  "python-dotenv>=1.0.0",
+  "pydantic>=2.0.0",
+  "pyyaml>=6.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0",
+  "ruff>=0.5.0"
+]
+
+[project.scripts]
+ai-agents = "ai_agents.cli:main"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
