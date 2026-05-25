@@ -1,9 +1,42 @@
-.txt
-venv
+# Environment files
 .env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Build outputs
+build/
+dist/
+*.egg-info/
+
+# Local notes and experiments
+*.txt
 sample.py
 p.py
-mcp_server
-myConnect.session.sql
 notes.txt
+myConnect.session.sql
+mcp_server/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Ignored local project experiments
 projects/travel/
