@@ -14,7 +14,7 @@
 <h1 align="center">🐺 AI Agents with MCP and LangGraph</h1>
 
 <p align="center">
-  A collection of modular AI agents built with LangGraph, LangChain, MCP, and modern LLM tooling.
+  A modular AI agent platform built with LangGraph, LangChain, MCP, and Python.
 </p>
 
 ---
@@ -23,29 +23,28 @@
 
 **AI Agents with MCP and LangGraph** is a multi-agent experimentation hub where every agent is designed to solve a specific real-world task. The project demonstrates how autonomous agents can reason, use tools, call APIs, retrieve data, generate content, and automate workflows using a modular architecture.
 
-This repository explores practical agentic patterns such as:
+The repository is now being organized as an agent platform instead of only a collection of separate scripts. Existing agents still live inside `projects/`, while shared platform code lives inside `src/ai_agents/`.
 
-- Web research and intelligent scraping
-- Podcast generation from text or ideas
-- Stock market research and financial analysis
-- GitHub repository automation
-- Notion-based research and content organization
-- Retrieval-Augmented Generation using external knowledge sources
-- Tool calling through MCP-based integrations
+This gives the project a cleaner path toward:
 
-The main goal of this project is to understand how specialized agents can be designed, composed, and extended into production-ready AI workflows.
+- a unified FastAPI backend
+- a React dashboard for running agents
+- shared request and response formats
+- centralized configuration
+- reusable tools and workflows
+- easier testing and contribution
 
 ---
 
 ## ✨ Key Features
 
 - **Multi-Agent Architecture** — each agent is separated by responsibility and can evolve independently.
-- **LangGraph Workflows** — graph-based control flow for building reliable agentic systems.
-- **LangChain Integration** — support for LLM orchestration, tools, prompts, and chains.
+- **Shared Core Layer** — common schemas, base interface, registry, and configuration helpers.
+- **LangGraph Workflows** — graph-based control flow for reliable agentic systems.
+- **LangChain Integration** — LLM orchestration, tool calling, prompts, and chains.
 - **MCP Tooling** — Model Context Protocol support for connecting agents with external tools.
-- **API-Powered Agents** — integrations with services such as Tavily, Firecrawl, GitHub, Notion, ElevenLabs, and financial APIs.
-- **Extensible Structure** — new agents can be added without rewriting the whole codebase.
-- **Real-World Use Cases** — every agent targets a useful automation or productivity workflow.
+- **Extensible Structure** — new agents can be added without rewriting the whole project.
+- **Production Direction** — designed to later support API, CLI, UI, tests, and deployment.
 
 ---
 
@@ -66,8 +65,15 @@ The main goal of this project is to understand how specialized agents can be des
 
 ```bash
 Ai_agents/
-├── public/
-│   └── img.png
+├── src/
+│   └── ai_agents/
+│       ├── core/
+│       │   ├── base.py
+│       │   ├── registry.py
+│       │   └── schemas.py
+│       ├── config/
+│       │   └── settings.py
+│       └── cli.py
 ├── projects/
 │   ├── scraper/
 │   ├── podcast/
@@ -75,11 +81,56 @@ Ai_agents/
 │   ├── github/
 │   ├── notion/
 │   └── rag/
+├── public/
 ├── requirements.txt
+├── pyproject.toml
 └── README.md
 ```
 
-Each folder inside `projects/` contains an individual agent with its own logic, tools, and execution flow.
+### `src/ai_agents/`
+
+This is the shared platform layer. It contains common contracts, configuration helpers, and registry logic used by future production-ready agents.
+
+### `projects/`
+
+This contains the existing experimental agents. These agents can be gradually migrated into the shared architecture without breaking the current code.
+
+---
+
+## 🧩 Core Architecture
+
+The target flow is:
+
+```text
+User Input
+   ↓
+AgentRequest
+   ↓
+Agent Registry
+   ↓
+Selected Agent
+   ↓
+Tools / APIs / LLM / MCP
+   ↓
+AgentResponse
+   ↓
+CLI / FastAPI / Frontend
+```
+
+Every mature agent should eventually follow this contract:
+
+```python
+class MyAgent(BaseAgent):
+    info = AgentInfo(
+        name="My Agent",
+        slug="my-agent",
+        description="What this agent does",
+        tools=["tool-a", "tool-b"],
+    )
+
+    def run(self, request: AgentRequest) -> AgentResponse:
+        ...
+```
 
 ---
 
@@ -89,12 +140,10 @@ Each folder inside `projects/` contains an individual agent with its own logic, 
 - **LangGraph** — agent workflow orchestration
 - **LangChain** — LLM application framework
 - **MCP SDK** — tool integration using Model Context Protocol
-- **OpenRouter / Groq / LLM Providers** — model access and reasoning
+- **Pydantic** — typed request and response schemas
+- **python-dotenv** — local environment loading
 - **Streamlit** — UI layer for selected agents
-- **Tavily / Firecrawl** — web search and scraping
-- **ElevenLabs** — text-to-speech generation
-- **GitHub API / PyGithub** — GitHub automation
-- **Notion API** — Notion workspace automation
+- **External APIs** — research, scraping, audio, finance, GitHub, and Notion integrations
 
 ---
 
@@ -138,41 +187,43 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+For editable development:
+
+```bash
+pip install -e .
+```
+
 ---
 
 ## 🔐 Environment Variables
 
-Create a `.env` file in the root directory or inside the specific agent folder depending on the agent you are running.
+Keep your real keys only in a local `.env` file. The repository ignores `.env` files by default.
 
-Example:
+Example pattern:
 
 ```env
-OPENAI_API_KEY=your_openai_api_key
-OPENROUTER_API_KEY=your_openrouter_api_key
-GROQ_API_KEY=your_groq_api_key
-TAVILY_API_KEY=your_tavily_api_key
-FIRECRAWL_API_KEY=your_firecrawl_api_key
-ELEVENLABS_API_KEY=your_elevenlabs_api_key
-GITHUB_TOKEN=your_github_token
-NOTION_API_KEY=your_notion_api_key
+OPENAI_API_KEY=replace_me
+OPENROUTER_API_KEY=replace_me
+TAVILY_API_KEY=replace_me
 ```
 
-> You only need the keys required by the specific agent you want to run.
+Only add the keys required by the agent you are running.
 
 ---
 
 ## ▶️ Usage
 
-Move into the agent folder you want to run:
+Run an existing experimental agent:
 
 ```bash
 cd projects/scraper
+python main.py
 ```
 
-Run the main Python file for that agent:
+Run the platform CLI:
 
 ```bash
-python main.py
+python -m ai_agents.cli
 ```
 
 Some agents may use Streamlit:
@@ -181,22 +232,14 @@ Some agents may use Streamlit:
 streamlit run app.py
 ```
 
-If a specific agent has a different entry file, check that agent folder and run the relevant Python file.
-
 ---
 
 ## 🧩 Adding a New Agent
 
-To add a new agent, create a new folder inside `projects/`:
-
-```bash
-projects/my-new-agent/
-```
-
 Recommended structure:
 
 ```bash
-my-new-agent/
+projects/my-new-agent/
 ├── main.py
 ├── tools.py
 ├── prompts.py
@@ -204,48 +247,29 @@ my-new-agent/
 └── README.md
 ```
 
+For production-style agents, use the shared base classes inside `src/ai_agents/core/`.
+
 A good agent should have:
 
-- A clear goal
-- Well-defined tools
-- Strong prompt design
-- Proper error handling
-- Consistent input and output format
-- Documentation explaining how to run it
+- a clear goal
+- typed input and output
+- well-defined tools
+- proper error handling
+- clean prompt design
+- documentation explaining how to run it
 
 ---
 
 ## 🗺️ Roadmap
 
-- [ ] Add a unified FastAPI backend for running all agents from one API
-- [ ] Add a frontend dashboard for selecting and executing agents
-- [ ] Add shared response format for all agents
-- [ ] Add Docker support
+- [ ] Migrate each existing agent to the shared `BaseAgent` interface
+- [ ] Add a unified FastAPI backend for all agents
+- [ ] Add a frontend dashboard for selecting and running agents
 - [ ] Add per-agent README files
-- [ ] Add tests for core agent workflows
-- [ ] Add centralized logging and tracing
+- [ ] Add tests for registry and core workflows
+- [ ] Add Docker support
+- [ ] Add tracing and logging
 - [ ] Add deployment guide
-
----
-
-## 🤝 Contributing
-
-Contributions, suggestions, and improvements are welcome.
-
-You can contribute by:
-
-- Improving existing agents
-- Adding new agents
-- Fixing bugs
-- Improving documentation
-- Adding examples and demos
-- Creating better UI or API integrations
-
----
-
-## 📌 Notes
-
-This project is built for learning, experimentation, and showcasing practical AI automation patterns. Some agents may require paid or rate-limited APIs, so make sure your environment variables are configured correctly before running them.
 
 ---
 
