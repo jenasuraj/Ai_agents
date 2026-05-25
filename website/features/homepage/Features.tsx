@@ -1,45 +1,57 @@
 const FEATURES = [
   {
-    icon: "⬡",
-    title: "Multi-Agent Orchestration",
-    desc: "Deploy swarms of specialized agents that collaborate, delegate, and self-coordinate to solve complex multi-step tasks.",
+    icon: "🧠",
+    title: "Agentic RAG",
+    desc: "Retrieval-Augmented Generation with autonomous agents that fetch, reason, and synthesize knowledge from multiple sources.",
     accent: "#00f0ff",
   },
   {
-    icon: "◈",
-    title: "Memory & Context Engine",
-    desc: "Persistent long-term memory with semantic search. Your agents remember everything across sessions and teams.",
+    icon: "🤖",
+    title: "Deep Agent",
+    desc: "Advanced multi-step reasoning agents capable of planning, decision-making, and executing complex workflows end-to-end.",
     accent: "#7b2fff",
   },
   {
-    icon: "⌖",
-    title: "Tool-Use & API Mastery",
-    desc: "Native integrations with 200+ tools. Agents browse the web, write code, query databases, and call any REST API.",
+    icon: "🐙",
+    title: "GitHub Agent",
+    desc: "Automates repo management, code analysis, PR reviews, and issue tracking directly from your GitHub workflows.",
     accent: "#ff2f7b",
   },
   {
-    icon: "⟁",
-    title: "Self-Healing Pipelines",
-    desc: "Agents detect failures, retry with alternative strategies, and escalate intelligently. Zero babysitting required.",
+    icon: "📝",
+    title: "Notion Agent",
+    desc: "Seamlessly reads, writes, and organizes Notion pages, enabling automated documentation and knowledge management.",
     accent: "#ffb800",
   },
   {
-    icon: "⊞",
-    title: "Audit & Explainability",
-    desc: "Every decision is logged. Full chain-of-thought transparency with replay, diff, and approval workflows built in.",
+    icon: "🎙️",
+    title: "Podcast Agent",
+    desc: "Generates, summarizes, and transforms content into podcast-style audio workflows using AI narration pipelines.",
     accent: "#00f0ff",
   },
   {
-    icon: "⌬",
-    title: "Edge Deployment",
-    desc: "Run agents close to your data. On-premise, private cloud, or serverless — with sub-50ms response times globally.",
+    icon: "🕸️",
+    title: "Web Scraper Agent",
+    desc: "Intelligently extracts, structures, and processes data from websites with autonomous scraping and parsing logic.",
     accent: "#7b2fff",
+  },
+  {
+    icon: "📈",
+    title: "Stock Intelligence Agent",
+    desc: "Analyzes market trends, fetches real-time stock data, and provides actionable insights using AI-driven models.",
+    accent: "#ff2f7b",
+  },
+  {
+    icon: "✈️",
+    title: "Travel Agent",
+    desc: "Plans trips, compares routes, fetches pricing, and builds personalized itineraries with real-time data integration.",
+    accent: "#ffb800",
   },
 ];
 
 export default function Features() {
   return (
-    <section id="features" className="py-24 px-6 lg:px-10 relative">
+    <section id="agents" className="py-24 px-6 lg:px-10 relative">
       <div
         className="absolute inset-0 opacity-[0.02]"
         style={{
