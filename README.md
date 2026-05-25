@@ -21,7 +21,7 @@
 
 ## 🚀 Overview
 
-**AI Agents with MCP and LangGraph** is a multi-agent experimentation hub where every agent is designed to solve a specific real-world task. The project demonstrates how autonomous agents can reason, use tools, call APIs, retrieve data, generate content, and automate workflows using a modular architecture.
+**AI Agents with MCP and LangGraph** is a multi-agent experimentation hub where every agent is designed to solve a specific real-world task. The project demonstrates how autonomous agents can reason, use tools, call APIs, retrieve data, generate content, automate workflows, and return frontend-friendly structured responses using a modular architecture.
 
 The repository is now being organized as an agent platform instead of only a collection of separate scripts. Existing agents still live inside `projects/`, while shared platform code lives inside `src/ai_agents/`.
 
@@ -39,6 +39,8 @@ This gives the project a cleaner path toward:
 ## ✨ Key Features
 
 - **Multi-Agent Architecture** — each agent is separated by responsibility and can evolve independently.
+- **Planner + Executor Flow** — agents can first create an execution plan, then run tools and generate results.
+- **Structured Output Layer** — final responses can be converted into clean Pydantic schemas for API and React UI usage.
 - **Shared Core Layer** — common schemas, base interface, registry, and configuration helpers.
 - **LangGraph Workflows** — graph-based control flow for reliable agentic systems.
 - **LangChain Integration** — LLM orchestration, tool calling, prompts, and chains.
@@ -58,6 +60,67 @@ This gives the project a cleaner path toward:
 | **Agent 4** | [GitHub Agent](./projects/github) | Automates repository tasks such as documentation, repo analysis, and GitHub workflows. | GitHub API, MCP SDK, PyGithub |
 | **Agent 5** | [Notion Copilot](./projects/notion) | Helps with research, content structuring, and Notion workspace automation. | Notion API, Tavily, Firecrawl |
 | **Agent 6** | [RAG Agent](./projects/rag) | Performs retrieval-augmented generation over external knowledge sources. | Hugging Face |
+| **Agent 7** | [Travel Planner Agent](./projects/travel-planner) | Creates day-wise travel itineraries using a planner, tool execution loop, and structured final response. | LangGraph, LangChain, Pydantic, OpenRouter |
+
+---
+
+## 🧳 Travel Planner Agent
+
+The **Travel Planner Agent** is an agentic itinerary builder designed for frontend integration. Instead of returning only a paragraph, it follows a graph-based workflow and produces a clean JSON-like response that can be rendered directly in a React UI.
+
+### How it works
+
+```text
+User Travel Query
+   ↓
+Planner Node
+   ↓
+Execution Agent
+   ↓
+Tool Node
+   ↓
+Execution Agent
+   ↓
+Final Formatter Node
+   ↓
+Structured Travel Plan
+```
+
+### Core idea
+
+The ReAct-style execution agent is allowed to think, call tools, and refine the answer. After the execution is complete, a separate formatter node converts the final result into a strict Pydantic structure.
+
+This keeps the architecture clean:
+
+```text
+Agent Layer       → reasoning, planning, tools, iteration
+Formatter Layer   → strict schema for API/frontend
+React UI          → renders itinerary cards, day plans, costs, food, warnings
+```
+
+### Example structured response shape
+
+```json
+{
+  "user_query": "Plan a 3 day Goa trip",
+  "destination": "Goa",
+  "total_days": 3,
+  "budget": 15000,
+  "itinerary": [
+    {
+      "day": "Day 1",
+      "place": "North Goa",
+      "todo": ["Visit Baga Beach", "Explore Calangute", "Try local cafes"],
+      "food": ["Goan fish curry", "Seafood thali"],
+      "estimated_cost": 4000,
+      "travel_tip": "Rent a scooter to save local travel cost."
+    }
+  ],
+  "tools_used": ["weather_tool"],
+  "warnings": ["Check weather before beach activities."],
+  "ui_summary": "A budget-friendly Goa itinerary with beaches, food, and local travel tips."
+}
+```
 
 ---
 
@@ -80,7 +143,8 @@ Ai_agents/
 │   ├── stock/
 │   ├── github/
 │   ├── notion/
-│   └── rag/
+│   ├── rag/
+│   └── travel-planner/
 ├── public/
 ├── requirements.txt
 ├── pyproject.toml
@@ -132,6 +196,28 @@ class MyAgent(BaseAgent):
         ...
 ```
 
+For UI-first agents like the Travel Planner Agent, the final graph node can return a typed response schema:
+
+```python
+class DayPlan(BaseModel):
+    day: str
+    place: str
+    todo: list[str]
+    food: list[str]
+    estimated_cost: int
+    travel_tip: str
+
+class TravelPlanOutput(BaseModel):
+    user_query: str
+    destination: str
+    total_days: int
+    budget: int
+    itinerary: list[DayPlan]
+    tools_used: list[str]
+    warnings: list[str]
+    ui_summary: str
+```
+
 ---
 
 ## 🛠️ Tech Stack
@@ -141,9 +227,10 @@ class MyAgent(BaseAgent):
 - **LangChain** — LLM application framework
 - **MCP SDK** — tool integration using Model Context Protocol
 - **Pydantic** — typed request and response schemas
+- **OpenRouter** — model access for selected agents
 - **python-dotenv** — local environment loading
 - **Streamlit** — UI layer for selected agents
-- **External APIs** — research, scraping, audio, finance, GitHub, and Notion integrations
+- **External APIs** — research, scraping, audio, finance, GitHub, travel, weather, and Notion integrations
 
 ---
 
@@ -204,6 +291,7 @@ Example pattern:
 ```env
 OPENAI_API_KEY=replace_me
 OPENROUTER_API_KEY=replace_me
+OPENROUTER_BASE_URL=replace_me
 TAVILY_API_KEY=replace_me
 ```
 
@@ -217,6 +305,13 @@ Run an existing experimental agent:
 
 ```bash
 cd projects/scraper
+python main.py
+```
+
+Run the Travel Planner Agent:
+
+```bash
+cd projects/travel-planner
 python main.py
 ```
 
@@ -265,6 +360,7 @@ A good agent should have:
 - [ ] Migrate each existing agent to the shared `BaseAgent` interface
 - [ ] Add a unified FastAPI backend for all agents
 - [ ] Add a frontend dashboard for selecting and running agents
+- [ ] Connect the Travel Planner Agent to a React itinerary UI
 - [ ] Add per-agent README files
 - [ ] Add tests for registry and core workflows
 - [ ] Add Docker support
