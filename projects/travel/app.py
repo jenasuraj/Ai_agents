@@ -32,7 +32,7 @@ tools = [weather_tool]
 llm_with_tools = llm.bind_tools(tools)
 
 
-class DayPlan(BaseModel):
+class DayPlan(BaseModel): #we use base model here as it supports field descriptions which are helpful for the structured output formatting
     day: str = Field(description="Day number or range, example: 'Day 1' or 'Day 1-2'")
     place: str = Field(description="Main place/city/location for this day")
     todo: List[str] = Field(description="Things to do on this day")
@@ -59,6 +59,7 @@ class State(TypedDict):
     structured_response: Dict[str, Any]
 
 
+structured_llm = llm.with_structured_output(FinalOutput)
 planner_prompt = """
 You are a travel planning agent.
 
@@ -129,8 +130,6 @@ def routing(state: State):
 
     return "final_formatter"
 
-
-structured_llm = llm.with_structured_output(FinalOutput)
 def final_formatter_node(state: State):
     user_query = state["messages"][0].content
     final_answer = state["messages"][-1].content

@@ -1,5 +1,4 @@
 from __future__ import annotations
-
 from ai_agents.core.registry import registry
 
 

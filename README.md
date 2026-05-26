@@ -58,6 +58,7 @@ This gives the project a cleaner path toward:
 | **Agent 4** | [GitHub Agent](./projects/github) | Automates repository tasks such as documentation, repo analysis, and GitHub workflows. | GitHub API, MCP SDK, PyGithub |
 | **Agent 5** | [Notion Copilot](./projects/notion) | Helps with research, content structuring, and Notion workspace automation. | Notion API, Tavily, Firecrawl |
 | **Agent 6** | [RAG Agent](./projects/rag) | Performs retrieval-augmented generation over external knowledge sources. | Hugging Face |
+| **Agent 7** | [Orchestration Worker Agent](./projects/orchestration_workers) | Breaks complex user goals into independent subtasks, routes them to worker agents, and synthesizes the outputs into one response. | LangGraph Send API, ChatOpenAI, OpenRouter |
 
 ---
 
@@ -80,7 +81,8 @@ Ai_agents/
 │   ├── stock/
 │   ├── github/
 │   ├── notion/
-│   └── rag/
+│   ├── rag/
+│   └── orchestration_workers/
 ├── public/
 ├── requirements.txt
 ├── pyproject.toml

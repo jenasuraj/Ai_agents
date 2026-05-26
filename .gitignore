@@ -37,6 +37,3 @@ mcp_server/
 .idea/
 .DS_Store
 Thumbs.db
-
-# Ignored local project experiments
-projects/travel/
