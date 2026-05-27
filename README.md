@@ -14,67 +14,47 @@
 <h1 align="center">🐺 AI Agents with MCP and LangGraph</h1>
 
 <p align="center">
-  A modular AI agent platform built with LangGraph, LangChain, MCP, and Python.
+  A compact multi-agent experimentation hub built with Python, LangGraph, LangChain, MCP, and external APIs.
 </p>
 
 ---
 
 ## 🚀 Overview
 
-**AI Agents with MCP and LangGraph** is a multi-agent experimentation hub where every agent is designed to solve a specific real-world task. The project demonstrates how autonomous agents can reason, use tools, call APIs, retrieve data, generate content, and automate workflows using a modular architecture.
+**AI Agents with MCP and LangGraph** is a modular agent lab where each agent focuses on one real-world workflow: research, scraping, podcast generation, finance, GitHub automation, Notion automation, RAG, and dynamic orchestration.
 
-The repository is now being organized as an agent platform instead of only a collection of separate scripts. Existing agents still live inside `projects/`, while shared platform code lives inside `src/ai_agents/`.
-
-This gives the project a cleaner path toward:
-
-- a unified FastAPI backend
-- a React dashboard for running agents
-- shared request and response formats
-- centralized configuration
-- reusable tools and workflows
-- easier testing and contribution
+The repo is moving toward a unified platform architecture: experimental agents live in `projects/`, while reusable platform code lives in `src/ai_agents/`.
 
 ---
 
-## ✨ Key Features
+## 🧠 Agents in `projects/`
 
-- **Multi-Agent Architecture** — each agent is separated by responsibility and can evolve independently.
-- **Shared Core Layer** — common schemas, base interface, registry, and configuration helpers.
-- **LangGraph Workflows** — graph-based control flow for reliable agentic systems.
-- **LangChain Integration** — LLM orchestration, tool calling, prompts, and chains.
-- **MCP Tooling** — Model Context Protocol support for connecting agents with external tools.
-- **Extensible Structure** — new agents can be added without rewriting the whole project.
-- **Production Direction** — designed to later support API, CLI, UI, tests, and deployment.
-
----
-
-## 🧠 Agent Overview
-
-| Agent | Name | Purpose | Key Tools / APIs |
+| Agent | Path | Purpose | Main Tools / APIs |
 | :--- | :--- | :--- | :--- |
-| **Agent 1** | [Scraper Agent](./projects/scraper) | Performs intelligent web research and extracts useful information from websites. | Tavily, Firecrawl |
-| **Agent 2** | [Podcast Agent](./projects/podcast) | Generates podcast-style content and converts text into speech. | ChatGroq, ElevenLabs, Streamlit |
-| **Agent 3** | [Stock Agent](./projects/stock) | Analyzes market data, stock-related news, and financial insights. | Alpha Vantage, NSE, MoneyControl |
-| **Agent 4** | [GitHub Agent](./projects/github) | Automates repository tasks such as documentation, repo analysis, and GitHub workflows. | GitHub API, MCP SDK, PyGithub |
-| **Agent 5** | [Notion Copilot](./projects/notion) | Helps with research, content structuring, and Notion workspace automation. | Notion API, Tavily, Firecrawl |
-| **Agent 6** | [RAG Agent](./projects/rag) | Performs retrieval-augmented generation over external knowledge sources. | Hugging Face |
-| **Agent 7** | [Orchestration Worker Agent](./projects/orchestration_workers) | Breaks complex user goals into independent subtasks, routes them to worker agents, and synthesizes the outputs into one response. | LangGraph Send API, ChatOpenAI, OpenRouter |
+| **Scraper Agent** | [`projects/scraper`](./projects/scraper) | Web research, scraping, and structured information extraction. | Tavily, Firecrawl |
+| **Podcast Agent** | [`projects/podcast`](./projects/podcast) | Converts ideas or text into podcast-style audio content. | ChatGroq, ElevenLabs, Streamlit |
+| **Stock Agent** | [`projects/stock`](./projects/stock) | Tracks market data, stock news, and financial insights. | Alpha Vantage, NSE, MoneyControl |
+| **GitHub Agent** | [`projects/github`](./projects/github) | Automates repository analysis, documentation, and GitHub workflows. | GitHub API, MCP SDK, PyGithub |
+| **Notion Copilot** | [`projects/notion`](./projects/notion) | Supports research, writing, and Notion workspace automation. | Notion API, Tavily, Firecrawl |
+| **RAG Agent** | [`projects/rag`](./projects/rag) | Answers questions using retrieval-augmented generation over knowledge sources. | Hugging Face |
+| **Orchestration Worker Agent** | [`projects/orchestration_workers`](./projects/orchestration_workers) | Splits a complex goal into independent tasks, sends them to workers, and combines the outputs. | LangGraph Send API, ChatOpenAI, OpenRouter |
 
 ---
 
-## 🏗️ Project Structure
+## ✨ What This Repo Demonstrates
+
+- **Agentic workflows** using LangGraph nodes, edges, tools, and state.
+- **Tool-using agents** that connect to search, scraping, finance, GitHub, Notion, and audio APIs.
+- **MCP integration** for external tool access and automation.
+- **Modular structure** where agents can evolve independently.
+- **Platform direction** with shared schemas, registry, config, and base agent contracts.
+
+---
+
+## 🏗️ Structure
 
 ```bash
 Ai_agents/
-├── src/
-│   └── ai_agents/
-│       ├── core/
-│       │   ├── base.py
-│       │   ├── registry.py
-│       │   └── schemas.py
-│       ├── config/
-│       │   └── settings.py
-│       └── cli.py
 ├── projects/
 │   ├── scraper/
 │   ├── podcast/
@@ -83,125 +63,53 @@ Ai_agents/
 │   ├── notion/
 │   ├── rag/
 │   └── orchestration_workers/
+├── src/
+│   └── ai_agents/
+│       ├── core/
+│       ├── config/
+│       └── cli.py
 ├── public/
 ├── requirements.txt
 ├── pyproject.toml
 └── README.md
 ```
 
-### `src/ai_agents/`
-
-This is the shared platform layer. It contains common contracts, configuration helpers, and registry logic used by future production-ready agents.
-
-### `projects/`
-
-This contains the existing experimental agents. These agents can be gradually migrated into the shared architecture without breaking the current code.
-
----
-
-## 🧩 Core Architecture
-
-The target flow is:
-
-```text
-User Input
-   ↓
-AgentRequest
-   ↓
-Agent Registry
-   ↓
-Selected Agent
-   ↓
-Tools / APIs / LLM / MCP
-   ↓
-AgentResponse
-   ↓
-CLI / FastAPI / Frontend
-```
-
-Every mature agent should eventually follow this contract:
-
-```python
-class MyAgent(BaseAgent):
-    info = AgentInfo(
-        name="My Agent",
-        slug="my-agent",
-        description="What this agent does",
-        tools=["tool-a", "tool-b"],
-    )
-
-    def run(self, request: AgentRequest) -> AgentResponse:
-        ...
-```
+`projects/` contains the working experimental agents. `src/ai_agents/` contains the shared platform layer for future production-ready agents.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Python** — core programming language
-- **LangGraph** — agent workflow orchestration
-- **LangChain** — LLM application framework
-- **MCP SDK** — tool integration using Model Context Protocol
-- **Pydantic** — typed request and response schemas
-- **python-dotenv** — local environment loading
-- **Streamlit** — UI layer for selected agents
-- **External APIs** — research, scraping, audio, finance, GitHub, and Notion integrations
+**Python**, **LangGraph**, **LangChain**, **MCP SDK**, **Pydantic**, **Streamlit**, **python-dotenv**, and APIs for scraping, research, finance, GitHub, Notion, and audio generation.
 
 ---
 
-## ⚙️ Installation
-
-### 1. Clone the repository
+## ⚙️ Setup
 
 ```bash
 git clone git@github.com:jenasuraj/Ai_agents.git
-```
-
-### 2. Move into the project
-
-```bash
 cd Ai_agents
-```
-
-### 3. Create a virtual environment
-
-```bash
 python -m venv venv
 ```
 
-### 4. Activate the virtual environment
-
-For Windows:
+Activate the environment:
 
 ```bash
+# Windows
 venv\Scripts\activate
-```
 
-For macOS/Linux:
-
-```bash
+# macOS / Linux
 source venv/bin/activate
 ```
 
-### 5. Install dependencies
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
-```
-
-For editable development:
-
-```bash
 pip install -e .
 ```
 
----
-
-## 🔐 Environment Variables
-
-Keep your real keys only in a local `.env` file. The repository ignores `.env` files by default.
-
-Example pattern:
+Create a local `.env` file and add only the keys required by the agent you want to run:
 
 ```env
 OPENAI_API_KEY=replace_me
@@ -209,26 +117,24 @@ OPENROUTER_API_KEY=replace_me
 TAVILY_API_KEY=replace_me
 ```
 
-Only add the keys required by the agent you are running.
-
 ---
 
 ## ▶️ Usage
 
-Run an existing experimental agent:
+Run an experimental agent:
 
 ```bash
 cd projects/scraper
 python main.py
 ```
 
-Run the platform CLI:
+Run the shared CLI:
 
 ```bash
 python -m ai_agents.cli
 ```
 
-Some agents may use Streamlit:
+Run Streamlit-based agents when available:
 
 ```bash
 streamlit run app.py
@@ -236,42 +142,12 @@ streamlit run app.py
 
 ---
 
-## 🧩 Adding a New Agent
-
-Recommended structure:
-
-```bash
-projects/my-new-agent/
-├── main.py
-├── tools.py
-├── prompts.py
-├── graph.py
-└── README.md
-```
-
-For production-style agents, use the shared base classes inside `src/ai_agents/core/`.
-
-A good agent should have:
-
-- a clear goal
-- typed input and output
-- well-defined tools
-- proper error handling
-- clean prompt design
-- documentation explaining how to run it
-
----
-
 ## 🗺️ Roadmap
 
-- [ ] Migrate each existing agent to the shared `BaseAgent` interface
-- [ ] Add a unified FastAPI backend for all agents
-- [ ] Add a frontend dashboard for selecting and running agents
-- [ ] Add per-agent README files
-- [ ] Add tests for registry and core workflows
-- [ ] Add Docker support
-- [ ] Add tracing and logging
-- [ ] Add deployment guide
+- Migrate all `projects/` agents to the shared `BaseAgent` contract.
+- Add a unified FastAPI backend.
+- Add a React dashboard for choosing and running agents.
+- Add tests, tracing, Docker support, and deployment docs.
 
 ---
 
