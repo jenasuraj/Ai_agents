@@ -21,7 +21,7 @@
 
 ## 🚀 Overview
 
-**AI Agents with MCP and LangGraph** is a modular agent lab where each agent focuses on one real-world workflow: research, scraping, podcast generation, finance, GitHub automation, Notion automation, RAG, and dynamic orchestration.
+**AI Agents with MCP and LangGraph** is a modular agent lab where each agent focuses on one real-world workflow: research, scraping, travel planning, podcast generation, finance, GitHub automation, Notion automation, RAG, and dynamic orchestration.
 
 The repo is moving toward a unified platform architecture: experimental agents live in `projects/`, while reusable platform code lives in `src/ai_agents/`.
 
@@ -32,6 +32,7 @@ The repo is moving toward a unified platform architecture: experimental agents l
 | Agent | Path | Purpose | Main Tools / APIs |
 | :--- | :--- | :--- | :--- |
 | **Scraper Agent** | [`projects/scraper`](./projects/scraper) | Web research, scraping, and structured information extraction. | Tavily, Firecrawl |
+| **Travel Agent** | [`projects/travel`](./projects/travel) | Plans trips, explores destinations, and helps with travel-related recommendations. | LLMs, search/travel APIs |
 | **Podcast Agent** | [`projects/podcast`](./projects/podcast) | Converts ideas or text into podcast-style audio content. | ChatGroq, ElevenLabs, Streamlit |
 | **Stock Agent** | [`projects/stock`](./projects/stock) | Tracks market data, stock news, and financial insights. | Alpha Vantage, NSE, MoneyControl |
 | **GitHub Agent** | [`projects/github`](./projects/github) | Automates repository analysis, documentation, and GitHub workflows. | GitHub API, MCP SDK, PyGithub |
@@ -44,7 +45,7 @@ The repo is moving toward a unified platform architecture: experimental agents l
 ## ✨ What This Repo Demonstrates
 
 - **Agentic workflows** using LangGraph nodes, edges, tools, and state.
-- **Tool-using agents** that connect to search, scraping, finance, GitHub, Notion, and audio APIs.
+- **Tool-using agents** that connect to search, scraping, travel, finance, GitHub, Notion, and audio APIs.
 - **MCP integration** for external tool access and automation.
 - **Modular structure** where agents can evolve independently.
 - **Platform direction** with shared schemas, registry, config, and base agent contracts.
@@ -57,6 +58,7 @@ The repo is moving toward a unified platform architecture: experimental agents l
 Ai_agents/
 ├── projects/
 │   ├── scraper/
+│   ├── travel/
 │   ├── podcast/
 │   ├── stock/
 │   ├── github/
@@ -80,7 +82,7 @@ Ai_agents/
 
 ## 🛠️ Tech Stack
 
-**Python**, **LangGraph**, **LangChain**, **MCP SDK**, **Pydantic**, **Streamlit**, **python-dotenv**, and APIs for scraping, research, finance, GitHub, Notion, and audio generation.
+**Python**, **LangGraph**, **LangChain**, **MCP SDK**, **Pydantic**, **Streamlit**, **python-dotenv**, and APIs for scraping, research, travel, finance, GitHub, Notion, and audio generation.
 
 ---
 
